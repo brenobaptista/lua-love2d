@@ -49,8 +49,9 @@ function world.draw()
 			end
 
       if world.visualGrid[y][x] == 3 then
+        local padding = world.tileSize / 8
         love.graphics.setColor(love.math.colorFromBytes(world.colors.location[1], world.colors.location[2], world.colors.location[3]))
-				love.graphics.circle("fill", (x + 1 / 2) * world.tileSize, (y + 1 / 2) * world.tileSize, world.tileSize / 4)
+				love.graphics.circle("fill", x * world.tileSize + padding * 4, y * world.tileSize + padding * 4, world.tileSize - padding * 6)
 			end
 
       if world.visualGrid[y][x] == 4 then
