@@ -1,9 +1,9 @@
-require("world")
+require('world')
 
 function love.conf(t)
   t.accelerometerjoystick = false
 
-  t.window.title = "Sokoban"
+  t.window.title = 'Sokoban'
   t.window.width = world.tileSize * (world.mapDimensions.x + 2)
   t.window.height = world.tileSize * (world.mapDimensions.y + 2)
 

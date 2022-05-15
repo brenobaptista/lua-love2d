@@ -1,27 +1,27 @@
-require("utils")
+require('utils')
 
-floor = " "
-wall = "#"
-box = "$"
-storage = "."
-boxOnStorage = "*"
+floor = ' '
+wall = '#'
+box = '$'
+storage = '.'
+boxOnStorage = '*'
 
 world = {}
 world.tileSize = 64
 world.visualGrid = {
-  { " ", " ", "#", "#", "#", "#", "#", " " },
-  { "#", "#", "#", " ", " ", " ", "#", " " },
-  { "#", ".", " ", "$", " ", " ", "#", " " },
-  { "#", "#", "#", " ", "$", ".", "#", " " },
-  { "#", ".", "#", "#", "$", " ", "#", " " },
-  { "#", " ", "#", " ", ".", " ", "#", "#" },
-  { "#", "$", " ", "*", "$", "$", ".", "#" },
-  { "#", " ", " ", " ", ".", " ", " ", "#" },
-  { "#", "#", "#", "#", "#", "#", "#", "#" }
+  { ' ', ' ', '#', '#', '#', '#', '#', ' ' },
+  { '#', '#', '#', ' ', ' ', ' ', '#', ' ' },
+  { '#', '.', ' ', '$', ' ', ' ', '#', ' ' },
+  { '#', '#', '#', ' ', '$', '.', '#', ' ' },
+  { '#', '.', '#', '#', '$', ' ', '#', ' ' },
+  { '#', ' ', '#', ' ', '.', ' ', '#', '#' },
+  { '#', '$', ' ', '*', '$', '$', '.', '#' },
+  { '#', ' ', ' ', ' ', '.', ' ', ' ', '#' },
+  { '#', '#', '#', '#', '#', '#', '#', '#' }
 }
 world.mapDimensions = {
-  ["x"] = utils.getLength(world.visualGrid[1]),
-  ["y"] = utils.getLength(world.visualGrid)
+  ['x'] = utils.getLength(world.visualGrid[1]),
+  ['y'] = utils.getLength(world.visualGrid)
 }
 world.colors = {
   [floor] = { 40, 42, 54 },
@@ -32,24 +32,24 @@ world.colors = {
 }
 
 function world.draw()
-  love.graphics.setBackgroundColor(love.math.colorFromBytes(world.colors[" "][1], world.colors[" "][2], world.colors[" "][3]))
+  love.graphics.setBackgroundColor(love.math.colorFromBytes(world.colors[' '][1], world.colors[' '][2], world.colors[' '][3]))
 
   for y, row in pairs(world.visualGrid) do
     for x, cell in pairs(row) do
       local padding = world.tileSize / 8
       love.graphics.setColor(love.math.colorFromBytes(world.colors[cell][1], world.colors[cell][2], world.colors[cell][3]))
 
-      if cell == "#" then
+      if cell == '#' then
         local padding = 1
-				love.graphics.rectangle("fill", x * world.tileSize + padding, y * world.tileSize + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
+				love.graphics.rectangle('fill', x * world.tileSize + padding, y * world.tileSize + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
 			end
 
-      if cell == "$" or cell == "*" then
-				love.graphics.rectangle("fill", x * world.tileSize + padding, y * world.tileSize + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
+      if cell == '$' or cell == '*' then
+				love.graphics.rectangle('fill', x * world.tileSize + padding, y * world.tileSize + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
 			end
 
-      if cell == "." then
-				love.graphics.circle("fill", x * world.tileSize + padding * 4, y * world.tileSize + padding * 4, world.tileSize - padding * 6)
+      if cell == '.' then
+				love.graphics.circle('fill', x * world.tileSize + padding * 4, y * world.tileSize + padding * 4, world.tileSize - padding * 6)
 			end
     end
   end
@@ -66,18 +66,18 @@ end
 function world.moveBox(boxX, boxY, directionX, directionY)
   local nextDrawnTile = world.getTile(boxX + directionX, boxY + directionY)
 
-  if nextDrawnTile == "#" or nextDrawnTile == nil then
+  if nextDrawnTile == '#' or nextDrawnTile == nil then
 		return false
 	end
 
-  if nextDrawnTile == "$" or nextDrawnTile == "*" then
+  if nextDrawnTile == '$' or nextDrawnTile == '*' then
     return false
   end
 
-  local drawnValue = (world.getTile(boxX, boxY) == "*") and "." or " "
+  local drawnValue = (world.getTile(boxX, boxY) == '*') and '.' or ' '
   world.updateTile(boxX, boxY, drawnValue)
 
-  local nextDrawnValue = (nextDrawnTile == ".") and "*" or "$"
+  local nextDrawnValue = (nextDrawnTile == '.') and '*' or '$'
   world.updateTile(boxX + directionX, boxY + directionY, nextDrawnValue)
 
   return true

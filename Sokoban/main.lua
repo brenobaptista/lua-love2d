@@ -1,5 +1,5 @@
-require("world")
-require("player")
+require('world')
+require('player')
 
 function love.update(dt)
 	player.updateDrawn(dt)
