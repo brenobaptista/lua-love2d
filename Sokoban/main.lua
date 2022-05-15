@@ -10,18 +10,8 @@ function love.draw()
   player.draw()
 end
 
-function canMove(x, y)
-  local nextDrawnTile = world.getTile((player.nextDrawn.x / world.tileSize) + x, (player.nextDrawn.y / world.tileSize) + y)
-
-  if nextDrawnTile == 1 or nextDrawnTile == nil then
-		return false
-	end
-
-  return true
-end
-
 function handleArrowKeys(x, y)
-  if canMove(x, y) then
+  if player.canMove(x, y) then
     player.updateNextDrawn(x, y)
   end
 end

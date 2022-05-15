@@ -27,3 +27,23 @@ function player.updateNextDrawn(x, y)
   player.nextDrawn.y = player.nextDrawn.y + world.tileSize * y
   player.nextDrawn.x = player.nextDrawn.x + world.tileSize * x
 end
+
+function player.canMove(x, y)
+  local nextDrawnX = (player.nextDrawn.x / world.tileSize) + x
+  local nextDrawnY = (player.nextDrawn.y / world.tileSize) + y
+  local nextDrawnTile = world.getTile(nextDrawnX, nextDrawnY)
+
+  if nextDrawnTile == 1 or nextDrawnTile == nil then
+		return false
+	end
+
+  if nextDrawnTile == 2 then
+    local didBoxMove = world.moveBox(nextDrawnX, nextDrawnY, x, y)
+
+    if not didBoxMove then
+      return false
+    end
+  end
+
+  return true
+end
