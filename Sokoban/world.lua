@@ -1,5 +1,3 @@
-require('utils')
-
 floor = ' '
 wall = '#'
 box = '$'
@@ -20,8 +18,8 @@ world.visualGrid = {
   { '#', '#', '#', '#', '#', '#', '#', '#' }
 }
 world.mapDimensions = {
-  ['x'] = utils.getLength(world.visualGrid[1]),
-  ['y'] = utils.getLength(world.visualGrid)
+  ['x'] = #world.visualGrid[1],
+  ['y'] = #world.visualGrid
 }
 world.colors = {
   [floor] = { 40, 42, 54 },
