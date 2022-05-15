@@ -1,9 +1,11 @@
+require("map")
+
 function love.conf(t)
   t.accelerometerjoystick = false
 
   t.window.title = "Sokoban"
-  t.window.width = 512
-  t.window.height = 576
+  t.window.width = gridSize * (lengthMapX + 2)
+  t.window.height = gridSize * (lengthMapY + 2)
 
   t.modules.data = false
   t.modules.joystick = false

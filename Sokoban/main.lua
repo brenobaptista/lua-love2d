@@ -1,25 +1,15 @@
+require("map")
+
 function love.load()
-  backgroundColor = { 40, 42, 54 }
+  floorColor = { 40, 42, 54 }
+  wallColor = { 68, 71, 90 }
   playerColor = { 189, 147, 249 }
-  gridColor = { 68, 71, 90 }
-  gridSize = 64
 	player = {
-    renderedX = gridSize * 2,
-    renderedY = gridSize * 2,
-		destinationX = gridSize * 2,
-		destinationY = gridSize * 2,
+    renderedX = gridSize * 3,
+    renderedY = gridSize * 3,
+		destinationX = gridSize * 3,
+		destinationY = gridSize * 3,
 		transitionSpeed = 25
-	}
-	map = {
-		{ 0, 0, 1, 1, 1, 1, 1, 0 },
-		{ 1, 1, 1, 0, 0, 0, 1, 0 },
-		{ 1, 0, 0, 0, 0, 0, 1, 0 },
-		{ 1, 1, 1, 0, 0, 0, 1, 0 },
-		{ 1, 0, 1, 1, 0, 0, 1, 0 },
-		{ 1, 0, 1, 0, 0, 0, 1, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 0, 0, 0, 0, 0, 0, 1 },
-		{ 1, 1, 1, 1, 1, 1, 1, 1 }
 	}
 end
 
@@ -29,7 +19,7 @@ function love.update(dt)
 end
 
 function love.draw()
-  love.graphics.setBackgroundColor(love.math.colorFromBytes(backgroundColor[1], backgroundColor[2], backgroundColor[3]))
+  love.graphics.setBackgroundColor(love.math.colorFromBytes(floorColor[1], floorColor[2], floorColor[3]))
 
   local padding = 15
   love.graphics.setColor(love.math.colorFromBytes(playerColor[1], playerColor[2], playerColor[3]))
@@ -39,8 +29,8 @@ function love.draw()
 		for x=1, #map[y] do
 			if map[y][x] == 1 then
         local padding = 1
-        love.graphics.setColor(love.math.colorFromBytes(gridColor[1], gridColor[2], gridColor[3]))
-				love.graphics.rectangle("fill", (x - 1) * gridSize + padding, (y - 1) * gridSize + padding, gridSize - padding * 2, gridSize - padding * 2)
+        love.graphics.setColor(love.math.colorFromBytes(wallColor[1], wallColor[2], wallColor[3]))
+				love.graphics.rectangle("fill", x * gridSize + padding, y * gridSize + padding, gridSize - padding * 2, gridSize - padding * 2)
 			end
 		end
 	end
@@ -70,7 +60,7 @@ function love.keypressed(key)
 end
 
 function canMove(x, y)
-  local destinationTile = map[(player.destinationY / gridSize) + y + 1][(player.destinationX / gridSize) + x + 1]
+  local destinationTile = map[(player.destinationY / gridSize) + y][(player.destinationX / gridSize) + x]
 
   if destinationTile == 1 or destinationTile == nil then
 		return false
