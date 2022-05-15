@@ -31,14 +31,16 @@ end
 function love.draw()
   love.graphics.setBackgroundColor(love.math.colorFromBytes(backgroundColor[1], backgroundColor[2], backgroundColor[3]))
 
+  local padding = 15
   love.graphics.setColor(love.math.colorFromBytes(playerColor[1], playerColor[2], playerColor[3]))
-	love.graphics.rectangle("fill", player.renderedX, player.renderedY, gridSize, gridSize)
+	love.graphics.rectangle("fill", player.renderedX + padding, player.renderedY + padding, gridSize - padding * 2, gridSize - padding * 2)
 
 	for y=1, #map do
 		for x=1, #map[y] do
 			if map[y][x] == 1 then
+        local padding = 1
         love.graphics.setColor(love.math.colorFromBytes(gridColor[1], gridColor[2], gridColor[3]))
-				love.graphics.rectangle("fill", (x - 1) * gridSize, (y - 1) * gridSize, gridSize, gridSize)
+				love.graphics.rectangle("fill", (x - 1) * gridSize + padding, (y - 1) * gridSize + padding, gridSize - padding * 2, gridSize - padding * 2)
 			end
 		end
 	end
