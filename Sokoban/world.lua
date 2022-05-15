@@ -59,7 +59,7 @@ function world.getTile(x, y)
   return world.visualGrid[y][x]
 end
 
-function world.updateTile(x, y, value)
+local function updateTile(x, y, value)
   world.visualGrid[y][x] = value
 end
 
@@ -75,10 +75,10 @@ function world.moveBox(boxX, boxY, directionX, directionY)
   end
 
   local drawnValue = (world.getTile(boxX, boxY) == '*') and '.' or ' '
-  world.updateTile(boxX, boxY, drawnValue)
+  updateTile(boxX, boxY, drawnValue)
 
   local nextDrawnValue = (nextDrawnTile == '.') and '*' or '$'
-  world.updateTile(boxX + directionX, boxY + directionY, nextDrawnValue)
+  updateTile(boxX + directionX, boxY + directionY, nextDrawnValue)
 
   return true
 end

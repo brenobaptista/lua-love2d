@@ -10,7 +10,7 @@ function love.draw()
   player.draw()
 end
 
-function handleArrowKeys(x, y)
+local function handleArrowKeys(x, y)
   if player.canMove(x, y) then
     player.updateNextDrawn(x, y)
   end
