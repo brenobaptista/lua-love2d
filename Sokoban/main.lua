@@ -11,7 +11,7 @@ function love.load()
 end
 
 function love.update(dt)
-	updatePlayerRenderedPosition(dt)
+	player.updatePlayerRenderedPosition(dt)
 end
 
 function renderWorld()
@@ -40,7 +40,7 @@ function love.draw()
 end
 
 function canMove(x, y)
-  local destinationTile = getTile((player.destination.x / world.tileSize) + x, (player.destination.y / world.tileSize) + y)
+  local destinationTile = world.getTile((player.destination.x / world.tileSize) + x, (player.destination.y / world.tileSize) + y)
 
   if destinationTile == 1 or destinationTile == nil then
 		return false
@@ -51,7 +51,7 @@ end
 
 function handleArrowKeys(x, y)
   if canMove(x, y) then
-    updatePlayerDestinationPosition(x, y)
+    player.updatePlayerDestinationPosition(x, y)
   end
 end
 

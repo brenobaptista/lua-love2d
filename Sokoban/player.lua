@@ -12,12 +12,12 @@ player.destination = {
 player.transitionSpeed = 25
 player.color = { 189, 147, 249 }
 
-function updatePlayerRenderedPosition(dt)
+function player.updatePlayerRenderedPosition(dt)
   player.rendered.y = player.rendered.y - ((player.rendered.y - player.destination.y) * player.transitionSpeed * dt)
 	player.rendered.x = player.rendered.x - ((player.rendered.x - player.destination.x) * player.transitionSpeed * dt)
 end
 
-function updatePlayerDestinationPosition(x, y)
+function player.updatePlayerDestinationPosition(x, y)
   player.destination.y = player.destination.y + world.tileSize * y
   player.destination.x = player.destination.x + world.tileSize * x
 end

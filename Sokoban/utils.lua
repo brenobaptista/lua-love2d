@@ -1,4 +1,6 @@
-function getLength(table)
+utils = {}
+
+function utils.getLength(table)
   local value = 0
 
   for _ in pairs(table) do

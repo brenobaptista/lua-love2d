@@ -17,14 +17,14 @@ world.visualGrid = {
   { 1, 1, 1, 1, 1, 1, 1, 1 }
 }
 world.mapDimensions = {
-  ["x"] = getLength(world.visualGrid[1]),
-  ["y"] = getLength(world.visualGrid)
+  ["x"] = utils.getLength(world.visualGrid[1]),
+  ["y"] = utils.getLength(world.visualGrid)
 }
 world.colors = {
   ["floor"] = { 40, 42, 54 },
   ["wall"] = { 68, 71, 90 }
 }
 
-function getTile(x, y)
+function world.getTile(x, y)
   return world.visualGrid[y][x]
 end
