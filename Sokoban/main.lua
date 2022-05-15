@@ -48,33 +48,33 @@ end
 
 function love.keypressed(key)
 	if key == "up" then
-		if checkMapCollision(0, -1) then
+		if canMove(0, -1) then
 			player.destinationY = player.destinationY - gridSize
 		end
 
 	elseif key == "down" then
-		if checkMapCollision(0, 1) then
+		if canMove(0, 1) then
 			player.destinationY = player.destinationY + gridSize
 		end
 
 	elseif key == "left" then
-		if checkMapCollision(-1, 0) then
+		if canMove(-1, 0) then
 			player.destinationX = player.destinationX - gridSize
 		end
 
 	elseif key == "right" then
-		if checkMapCollision(1, 0) then
+		if canMove(1, 0) then
 			player.destinationX = player.destinationX + gridSize
 		end
 	end
 end
 
-function checkMapCollision(x, y)
-  local wouldDestinationCollide = map[(player.destinationY / gridSize) + y + 1][(player.destinationX / gridSize) + x + 1]
+function canMove(x, y)
+  local destinationTile = map[(player.destinationY / gridSize) + y + 1][(player.destinationX / gridSize) + x + 1]
 
-	if wouldDestinationCollide == 1 or wouldDestinationCollide == nil then
+  if destinationTile == 1 or destinationTile == nil then
 		return false
 	end
 
-	return true
+  return true
 end
