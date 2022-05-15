@@ -3,18 +3,20 @@ require("utils")
 -- 0 means floor
 -- 1 means wall
 -- 2 means box
+-- 3 means location
+-- 4 means box in location
 
 world = {}
 world.tileSize = 64
 world.visualGrid = {
   { 0, 0, 1, 1, 1, 1, 1, 0 },
   { 1, 1, 1, 0, 0, 0, 1, 0 },
-  { 1, 0, 0, 2, 0, 0, 1, 0 },
-  { 1, 1, 1, 0, 2, 0, 1, 0 },
-  { 1, 0, 1, 1, 2, 0, 1, 0 },
-  { 1, 0, 1, 0, 0, 0, 1, 1 },
-  { 1, 2, 0, 2, 2, 2, 0, 1 },
-  { 1, 0, 0, 0, 0, 0, 0, 1 },
+  { 1, 3, 0, 2, 0, 0, 1, 0 },
+  { 1, 1, 1, 0, 2, 3, 1, 0 },
+  { 1, 3, 1, 1, 2, 0, 1, 0 },
+  { 1, 0, 1, 0, 3, 0, 1, 1 },
+  { 1, 2, 0, 4, 2, 2, 3, 1 },
+  { 1, 0, 0, 0, 3, 0, 0, 1 },
   { 1, 1, 1, 1, 1, 1, 1, 1 }
 }
 world.mapDimensions = {
@@ -24,7 +26,9 @@ world.mapDimensions = {
 world.colors = {
   ["floor"] = { 40, 42, 54 },
   ["wall"] = { 68, 71, 90 },
-  ["box"] = { 255, 184, 108 }
+  ["box"] = { 241, 250, 140 },
+  ["location"] = { 255, 85, 85, 1 },
+  ["boxInLocation"] = { 255, 184, 108 }
 }
 
 function world.draw()
@@ -41,6 +45,17 @@ function world.draw()
       if world.visualGrid[y][x] == 2 then
         local padding = world.tileSize / 8
         love.graphics.setColor(love.math.colorFromBytes(world.colors.box[1], world.colors.box[2], world.colors.box[3]))
+				love.graphics.rectangle("fill", x * world.tileSize + padding, y * world.tileSize + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
+			end
+
+      if world.visualGrid[y][x] == 3 then
+        love.graphics.setColor(love.math.colorFromBytes(world.colors.location[1], world.colors.location[2], world.colors.location[3]))
+				love.graphics.circle("fill", (x + 1 / 2) * world.tileSize, (y + 1 / 2) * world.tileSize, world.tileSize / 4)
+			end
+
+      if world.visualGrid[y][x] == 4 then
+        local padding = world.tileSize / 8
+        love.graphics.setColor(love.math.colorFromBytes(world.colors.boxInLocation[1], world.colors.boxInLocation[2], world.colors.boxInLocation[3]))
 				love.graphics.rectangle("fill", x * world.tileSize + padding, y * world.tileSize + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
 			end
 		end
@@ -62,7 +77,15 @@ function world.moveBox(boxX, boxY, directionX, directionY)
 		return false
 	end
 
-  world.updateTile(boxX, boxY, 0)
-  world.updateTile(boxX + directionX, boxY + directionY, 2)
+  if nextDrawnTile == 2 or nextDrawnTile == 4 then
+    return false
+  end
+
+  local drawnValue = (world.getTile(boxX, boxY) == 4) and 3 or 0
+  world.updateTile(boxX, boxY, drawnValue)
+
+  local nextDrawnValue = (nextDrawnTile == 3) and 4 or 2
+  world.updateTile(boxX + directionX, boxY + directionY, nextDrawnValue)
+
   return true
 end

@@ -37,7 +37,7 @@ function player.canMove(x, y)
 		return false
 	end
 
-  if nextDrawnTile == 2 then
+  if nextDrawnTile == 2 or nextDrawnTile == 4 then
     local didBoxMove = world.moveBox(nextDrawnX, nextDrawnY, x, y)
 
     if not didBoxMove then
