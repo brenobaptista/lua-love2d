@@ -14,29 +14,9 @@ function love.update(dt)
 	player.updatePlayerRenderedPosition(dt)
 end
 
-function renderWorld()
-  love.graphics.setBackgroundColor(love.math.colorFromBytes(world.colors.floor[1], world.colors.floor[2], world.colors.floor[3]))
-
-	for y=1, #world.visualGrid do
-		for x=1, #world.visualGrid[y] do
-			if world.visualGrid[y][x] == 1 then
-        local padding = 1
-        love.graphics.setColor(love.math.colorFromBytes(world.colors.wall[1], world.colors.wall[2], world.colors.wall[3]))
-				love.graphics.rectangle("fill", x * world.tileSize + padding, y * world.tileSize + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
-			end
-		end
-	end
-end
-
-function renderPlayer()
-  local padding = world.tileSize / 4
-  love.graphics.setColor(love.math.colorFromBytes(player.color[1], player.color[2], player.color[3]))
-	love.graphics.rectangle("fill", player.rendered.x + padding, player.rendered.y + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
-end
-
 function love.draw()
-  renderWorld()
-  renderPlayer()
+  world.draw()
+  player.draw()
 end
 
 function canMove(x, y)
