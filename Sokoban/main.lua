@@ -1,70 +1,64 @@
-require("map")
+require("world")
+require("player")
 
 function love.load()
-  floorColor = { 40, 42, 54 }
-  wallColor = { 68, 71, 90 }
-  playerColor = { 189, 147, 249 }
-	player = {
-    renderedX = gridSize * 3,
-    renderedY = gridSize * 3,
-		destinationX = gridSize * 3,
-		destinationY = gridSize * 3,
-		transitionSpeed = 25
-	}
+  arrowKeys = {
+    ["up"] = { 0, -1 },
+    ["down"] = { 0, 1 },
+    ["left"] = { -1, 0 },
+    ["right"] = { 1, 0 }
+  }
 end
 
 function love.update(dt)
-	player.renderedY = player.renderedY - ((player.renderedY - player.destinationY) * player.transitionSpeed * dt)
-	player.renderedX = player.renderedX - ((player.renderedX - player.destinationX) * player.transitionSpeed * dt)
+	updatePlayerRenderedPosition(dt)
 end
 
-function love.draw()
-  love.graphics.setBackgroundColor(love.math.colorFromBytes(floorColor[1], floorColor[2], floorColor[3]))
+function renderWorld()
+  love.graphics.setBackgroundColor(love.math.colorFromBytes(world.colors.floor[1], world.colors.floor[2], world.colors.floor[3]))
 
-  local padding = 15
-  love.graphics.setColor(love.math.colorFromBytes(playerColor[1], playerColor[2], playerColor[3]))
-	love.graphics.rectangle("fill", player.renderedX + padding, player.renderedY + padding, gridSize - padding * 2, gridSize - padding * 2)
-
-	for y=1, #map do
-		for x=1, #map[y] do
-			if map[y][x] == 1 then
+	for y=1, #world.visualGrid do
+		for x=1, #world.visualGrid[y] do
+			if world.visualGrid[y][x] == 1 then
         local padding = 1
-        love.graphics.setColor(love.math.colorFromBytes(wallColor[1], wallColor[2], wallColor[3]))
-				love.graphics.rectangle("fill", x * gridSize + padding, y * gridSize + padding, gridSize - padding * 2, gridSize - padding * 2)
+        love.graphics.setColor(love.math.colorFromBytes(world.colors.wall[1], world.colors.wall[2], world.colors.wall[3]))
+				love.graphics.rectangle("fill", x * world.tileSize + padding, y * world.tileSize + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
 			end
 		end
 	end
 end
 
-function love.keypressed(key)
-	if key == "up" then
-		if canMove(0, -1) then
-			player.destinationY = player.destinationY - gridSize
-		end
+function renderPlayer()
+  local padding = world.tileSize / 4
+  love.graphics.setColor(love.math.colorFromBytes(player.color[1], player.color[2], player.color[3]))
+	love.graphics.rectangle("fill", player.rendered.x + padding, player.rendered.y + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
+end
 
-	elseif key == "down" then
-		if canMove(0, 1) then
-			player.destinationY = player.destinationY + gridSize
-		end
-
-	elseif key == "left" then
-		if canMove(-1, 0) then
-			player.destinationX = player.destinationX - gridSize
-		end
-
-	elseif key == "right" then
-		if canMove(1, 0) then
-			player.destinationX = player.destinationX + gridSize
-		end
-	end
+function love.draw()
+  renderWorld()
+  renderPlayer()
 end
 
 function canMove(x, y)
-  local destinationTile = map[(player.destinationY / gridSize) + y][(player.destinationX / gridSize) + x]
+  local destinationTile = getTile((player.destination.x / world.tileSize) + x, (player.destination.y / world.tileSize) + y)
 
   if destinationTile == 1 or destinationTile == nil then
 		return false
 	end
 
   return true
+end
+
+function handleArrowKeys(x, y)
+  if canMove(x, y) then
+    updatePlayerDestinationPosition(x, y)
+  end
+end
+
+function love.keypressed(key)
+  for k, v in pairs(arrowKeys) do
+    if key == k then
+      handleArrowKeys(v[1], v[2])
+    end
+  end
 end
