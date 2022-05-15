@@ -33,11 +33,11 @@ function player.canMove(x, y)
   local nextDrawnY = (player.nextDrawn.y / world.tileSize) + y
   local nextDrawnTile = world.getTile(nextDrawnX, nextDrawnY)
 
-  if nextDrawnTile == 1 or nextDrawnTile == nil then
+  if nextDrawnTile == "#" or nextDrawnTile == nil then
 		return false
 	end
 
-  if nextDrawnTile == 2 or nextDrawnTile == 4 then
+  if nextDrawnTile == "$" or nextDrawnTile == "*" then
     local didBoxMove = world.moveBox(nextDrawnX, nextDrawnY, x, y)
 
     if not didBoxMove then
