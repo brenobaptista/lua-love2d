@@ -2,7 +2,7 @@ require("world")
 require("player")
 
 function love.update(dt)
-	player.updatePlayerRenderedPosition(dt)
+	player.updateDrawn(dt)
 end
 
 function love.draw()
@@ -11,9 +11,9 @@ function love.draw()
 end
 
 function canMove(x, y)
-  local destinationTile = world.getTile((player.destination.x / world.tileSize) + x, (player.destination.y / world.tileSize) + y)
+  local nextDrawnTile = world.getTile((player.nextDrawn.x / world.tileSize) + x, (player.nextDrawn.y / world.tileSize) + y)
 
-  if destinationTile == 1 or destinationTile == nil then
+  if nextDrawnTile == 1 or nextDrawnTile == nil then
 		return false
 	end
 
@@ -22,7 +22,7 @@ end
 
 function handleArrowKeys(x, y)
   if canMove(x, y) then
-    player.updatePlayerDestinationPosition(x, y)
+    player.updateNextDrawn(x, y)
   end
 end
 
