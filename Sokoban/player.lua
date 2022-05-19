@@ -2,12 +2,12 @@ require('world')
 
 player = {}
 player.drawn = {
-  ['x'] = world.tileSize * 2,
-  ['y'] = world.tileSize * 3
+  ['x'] = world.playerInitial.x,
+  ['y'] = world.playerInitial.y
 }
 player.nextDrawn = {
-  ['x'] = world.tileSize * 3,
-  ['y'] = world.tileSize * 3
+  ['x'] = world.playerInitial.x,
+  ['y'] = world.playerInitial.y
 }
 player.transitionSpeed = 25
 player.color = { 189, 147, 249 }

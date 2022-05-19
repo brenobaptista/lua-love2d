@@ -17,6 +17,10 @@ world.visualGrid = {
   { '#', ' ', ' ', ' ', '.', ' ', ' ', '#' },
   { '#', '#', '#', '#', '#', '#', '#', '#' }
 }
+world.playerInitial = {
+  ['x'] = world.tileSize * 3,
+  ['y'] = world.tileSize * 3
+}
 world.mapDimensions = {
   ['x'] = #world.visualGrid[1],
   ['y'] = #world.visualGrid
