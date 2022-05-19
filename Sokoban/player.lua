@@ -1,26 +1,27 @@
 require('world')
 
 player = {}
-player.drawn = {
-  ['x'] = world.playerInitial.x,
-  ['y'] = world.playerInitial.y
-}
-player.nextDrawn = {
-  ['x'] = world.playerInitial.x,
-  ['y'] = world.playerInitial.y
-}
+player.drawn = {}
+player.nextDrawn = {}
 player.transitionSpeed = 25
 player.color = { 189, 147, 249 }
+
+function player.loadPosition(level)
+  for axis, position in pairs(world.levels[level].playerPosition) do
+    player.drawn[axis] = position * world.tileSize
+    player.nextDrawn[axis] = position * world.tileSize
+  end
+end
 
 function player.draw()
   local padding = world.tileSize / 4
   love.graphics.setColor(love.math.colorFromBytes(player.color[1], player.color[2], player.color[3]))
-	love.graphics.rectangle('fill', player.drawn.x + padding, player.drawn.y + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
+  love.graphics.rectangle('fill', player.drawn.x + padding, player.drawn.y + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
 end
 
 function player.updateDrawn(dt)
   player.drawn.y = player.drawn.y - ((player.drawn.y - player.nextDrawn.y) * player.transitionSpeed * dt)
-	player.drawn.x = player.drawn.x - ((player.drawn.x - player.nextDrawn.x) * player.transitionSpeed * dt)
+  player.drawn.x = player.drawn.x - ((player.drawn.x - player.nextDrawn.x) * player.transitionSpeed * dt)
 end
 
 function player.updateNextDrawn(x, y)
@@ -34,8 +35,8 @@ function player.canMove(x, y)
   local nextDrawnTile = world.getTile(nextDrawnX, nextDrawnY)
 
   if nextDrawnTile == '#' or nextDrawnTile == nil then
-		return false
-	end
+    return false
+  end
 
   if nextDrawnTile == '$' or nextDrawnTile == '*' then
     local didBoxMove = world.moveBox(nextDrawnX, nextDrawnY, x, y)
