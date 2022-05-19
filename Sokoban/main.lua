@@ -1,10 +1,13 @@
+require('levels')
 require('world')
 require('player')
+
+local arrowKeys, levelKeys
 
 function love.load()
   local startLevel = 1
   world.loadLevel(startLevel)
-  player.loadPosition(startLevel)
+  player.loadPosition()
 
   arrowKeys = {
     ['up'] = { 0, -1 },
@@ -36,9 +39,9 @@ end
 
 local function handleLevelKeys(change)
   local selected = world.currentLevel + change
-  if 0 < selected and selected <= #world.levels then
+  if 0 < selected and selected <= #levels then
     world.loadLevel(selected)
-    player.loadPosition(selected)
+    player.loadPosition()
   end
 end
 

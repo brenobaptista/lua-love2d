@@ -1,58 +1,26 @@
-floor = ' '
-wall = '#'
-box = '$'
-storage = '.'
-boxOnStorage = '*'
-
 world = {}
 world.visualGrid = {}
+world.playerPosition = {}
 world.tileSize = 64
 world.currentLevel = 0
-world.levels = {
-  {
-    ['visualGrid'] = {
-      { ' ', ' ', '#', '#', '#' },
-      { ' ', ' ', '#', '.', '#' },
-      { ' ', ' ', '#', ' ', '#', '#', '#', '#' },
-      { '#', '#', '#', '$', ' ', '$', '.', '#' },
-      { '#', '.', ' ', '$', ' ', '#', '#', '#' },
-      { '#', '#', '#', '#', '$', '#' },
-      { ' ', ' ', ' ', '#', '.', '#' },
-      { ' ', ' ', ' ', '#', '#', '#' },
-    },
-    ['playerPosition'] = {
-      ['x'] = 5,
-      ['y'] = 5
-    }
-  },
-  {
-    ['visualGrid'] = {
-      { ' ', ' ', '#', '#', '#', '#', '#' },
-      { '#', '#', '#', ' ', ' ', ' ', '#' },
-      { '#', '.', ' ', '$', ' ', ' ', '#' },
-      { '#', '#', '#', ' ', '$', '.', '#' },
-      { '#', '.', '#', '#', '$', ' ', '#' },
-      { '#', ' ', '#', ' ', '.', ' ', '#', '#' },
-      { '#', '$', ' ', '*', '$', '$', '.', '#' },
-      { '#', ' ', ' ', ' ', '.', ' ', ' ', '#' },
-      { '#', '#', '#', '#', '#', '#', '#', '#' }
-    },
-    ['playerPosition'] = {
-      ['x'] = 3,
-      ['y'] = 3
-    }
-  }
+world.symbols = {
+  floor = ' ',
+  wall = '#',
+  box = '$',
+  storage = '.',
+  boxOnStorage = '*',
+  player = '@'
 }
 world.colors = {
-  [floor] = { 40, 42, 54 },
-  [wall] = { 68, 71, 90 },
-  [box] = { 241, 250, 140 },
-  [storage] = { 255, 85, 85, 1 },
-  [boxOnStorage] = { 255, 184, 108 }
+  [world.symbols.floor] = { 40, 42, 54 },
+  [world.symbols.wall] = { 68, 71, 90 },
+  [world.symbols.box] = { 241, 250, 140 },
+  [world.symbols.storage] = { 255, 85, 85, 1 },
+  [world.symbols.boxOnStorage] = { 255, 184, 108 }
 }
 
 local function setResolution(level)
-  local visualGrid = world.levels[level].visualGrid
+  local visualGrid = levels[level]
   local mapDimensions = {}
   mapDimensions.y = #visualGrid
   mapDimensions.x = 0
@@ -74,10 +42,18 @@ function world.loadLevel(level)
   end
 
   world.visualGrid = {}
-  for y, row in pairs(world.levels[level].visualGrid) do
+  for y, row in pairs(levels[level]) do
     world.visualGrid[y] = {}
     for x, cell in pairs(row) do
-      world.visualGrid[y][x] = cell
+      if cell == world.symbols.player then
+        world.playerPosition = {
+          ['x'] = x,
+          ['y'] = y
+        }
+        world.visualGrid[y][x] = world.symbols.floor
+      else
+        world.visualGrid[y][x] = cell
+      end
     end
   end
 
@@ -85,23 +61,23 @@ function world.loadLevel(level)
 end
 
 function world.draw()
-  love.graphics.setBackgroundColor(love.math.colorFromBytes(world.colors[' '][1], world.colors[' '][2], world.colors[' '][3]))
+  love.graphics.setBackgroundColor(love.math.colorFromBytes(world.colors[world.symbols.floor][1], world.colors[world.symbols.floor][2], world.colors[world.symbols.floor][3]))
 
   for y, row in pairs(world.visualGrid) do
     for x, cell in pairs(row) do
       local padding = world.tileSize / 8
       love.graphics.setColor(love.math.colorFromBytes(world.colors[cell][1], world.colors[cell][2], world.colors[cell][3]))
 
-      if cell == '#' then
+      if cell == world.symbols.wall then
         local padding = 1
         love.graphics.rectangle('fill', x * world.tileSize + padding, y * world.tileSize + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
       end
 
-      if cell == '$' or cell == '*' then
+      if cell == world.symbols.box or cell == world.symbols.boxOnStorage then
         love.graphics.rectangle('fill', x * world.tileSize + padding, y * world.tileSize + padding, world.tileSize - padding * 2, world.tileSize - padding * 2)
       end
 
-      if cell == '.' then
+      if cell == world.symbols.storage then
         love.graphics.circle('fill', x * world.tileSize + padding * 4, y * world.tileSize + padding * 4, world.tileSize - padding * 6)
       end
     end
@@ -119,18 +95,18 @@ end
 function world.moveBox(boxX, boxY, directionX, directionY)
   local nextDrawnTile = world.getTile(boxX + directionX, boxY + directionY)
 
-  if nextDrawnTile == '#' or nextDrawnTile == nil then
+  if nextDrawnTile == world.symbols.wall or nextDrawnTile == nil then
     return false
   end
 
-  if nextDrawnTile == '$' or nextDrawnTile == '*' then
+  if nextDrawnTile == world.symbols.box or nextDrawnTile == world.symbols.boxOnStorage then
     return false
   end
 
-  local drawnValue = (world.getTile(boxX, boxY) == '*') and '.' or ' '
+  local drawnValue = (world.getTile(boxX, boxY) == world.symbols.boxOnStorage) and world.symbols.storage or world.symbols.floor
   updateTile(boxX, boxY, drawnValue)
 
-  local nextDrawnValue = (nextDrawnTile == '.') and '*' or '$'
+  local nextDrawnValue = (nextDrawnTile == world.symbols.storage) and world.symbols.boxOnStorage or world.symbols.box
   updateTile(boxX + directionX, boxY + directionY, nextDrawnValue)
 
   return true
