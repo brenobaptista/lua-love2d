@@ -26,9 +26,9 @@ local function handleArrowKeys(x, y)
 end
 
 function love.keypressed(key)
-  for k, v in pairs(arrowKeys) do
-    if key == k then
-      handleArrowKeys(v[1], v[2])
+  for direction, coordinates in pairs(arrowKeys) do
+    if key == direction then
+      handleArrowKeys(coordinates[1], coordinates[2])
     end
   end
 end
