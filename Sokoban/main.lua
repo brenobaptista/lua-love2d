@@ -10,15 +10,15 @@ function love.load()
   player.loadPosition()
 
   arrowKeys = {
-    ['up'] = { 0, -1 },
-    ['down'] = { 0, 1 },
-    ['left'] = { -1, 0 },
-    ['right'] = { 1, 0 }
+    up = { 0, -1 },
+    down = { 0, 1 },
+    left = { -1, 0 },
+    right = { 1, 0 }
   }
   levelKeys = {
-    ['r'] = 0,
-    ['n'] = 1,
-    ['p'] = -1
+    r = 0,
+    n = 1,
+    p = -1
   }
 end
 
@@ -31,14 +31,14 @@ function love.draw()
   player.draw()
 end
 
-local function handleArrowKeys(x, y)
-  if player.canMove(x, y) then
-    player.updateNextDrawn(x, y)
+local function handleArrowKeys(dx, dy)
+  if player.canMove(dx, dx) then
+    player.updateNextDrawn(dx, dy)
   end
 end
 
-local function handleLevelKeys(change)
-  local selected = world.currentLevel + change
+local function handleLevelKeys(levelDifference)
+  local selected = world.currentLevel + levelDifference
   if 0 < selected and selected <= #levels then
     world.loadLevel(selected)
     player.loadPosition()
@@ -46,15 +46,15 @@ local function handleLevelKeys(change)
 end
 
 function love.keypressed(key)
-  for direction, coordinates in pairs(arrowKeys) do
+  for direction, gridDifference in pairs(arrowKeys) do
     if key == direction then
-      handleArrowKeys(coordinates[1], coordinates[2])
+      handleArrowKeys(gridDifference[1], gridDifference[2])
     end
   end
 
-  for selection, change in pairs(levelKeys) do
+  for selection, levelDifference in pairs(levelKeys) do
     if key == selection then
-      handleLevelKeys(change)
+      handleLevelKeys(levelDifference)
     end
   end
 end
