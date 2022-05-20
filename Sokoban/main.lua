@@ -9,6 +9,7 @@ function love.load()
   world.loadLevel(startLevel)
   player.loadPosition()
 
+  love.keyboard.setKeyRepeat(true)
   arrowKeys = {
     up = { 0, -1 },
     down = { 0, 1 },
