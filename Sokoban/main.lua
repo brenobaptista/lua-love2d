@@ -32,7 +32,7 @@ function love.draw()
 end
 
 local function handleArrowKeys(dx, dy)
-  if player.canMove(dx, dx) then
+  if player.canMove(dx, dy) then
     player.updateNextDrawn(dx, dy)
   end
 end
