@@ -1,6 +1,6 @@
-require('levels')
-require('world')
-require('player')
+require('src/levels')
+require('src/world')
+require('src/player')
 
 local arrowKeys, levelKeys
 
