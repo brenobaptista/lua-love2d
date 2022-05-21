@@ -21,6 +21,13 @@ function love.load()
     n = 1,
     p = -1
   }
+
+  sounds = {}
+  sounds.blip = love.audio.newSource("audio/blip-sound.wav", "static")
+  sounds.music = love.audio.newSource("audio/game-music.mp3", "stream")
+  sounds.music:setLooping(true)
+
+  sounds.music:play()
 end
 
 function love.update(dt)
@@ -35,6 +42,7 @@ end
 local function handleArrowKeys(dx, dy)
   if player.canMove(dx, dy) then
     player.updateNextDrawn(dx, dy)
+    sounds.blip:play()
   end
 end
 
@@ -57,5 +65,9 @@ function love.keypressed(key)
     if key == selection then
       handleLevelKeys(levelDifference)
     end
+  end
+
+  if key == "m" then
+    sounds.music:stop()
   end
 end
