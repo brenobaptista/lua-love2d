@@ -142,22 +142,17 @@ function world.moveBox(x, y, dx, dy)
     return false
   end
 
-  local drawnValue
-  if world.getTile(x, y) == world.symbols.boxOnStorage then
-    drawnValue = world.symbols.storage
-  else
-    drawnValue = world.symbols.floor
-  end
-  updateTile(x, y, drawnValue)
-
-  local nextDrawnValue
   if nextDrawnTile == world.symbols.storage then
-    nextDrawnValue = world.symbols.boxOnStorage
+    updateTile(x + dx, y + dy, world.symbols.boxOnStorage)
   else
-    nextDrawnValue = world.symbols.box
+    updateTile(x + dx, y + dy, world.symbols.box)
   end
 
-  updateTile(x + dx, y + dy, nextDrawnValue)
+  if world.getTile(x, y) == world.symbols.boxOnStorage then
+    updateTile(x, y, world.symbols.storage)
+  else
+    updateTile(x, y, world.symbols.floor)
+  end
 
   return true
 end
