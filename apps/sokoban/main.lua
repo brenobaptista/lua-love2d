@@ -1,3 +1,4 @@
+signals = require("../signals/signals")
 require('src/levels')
 require('src/world')
 require('src/player')
@@ -8,6 +9,14 @@ function love.load()
   local startLevel = 1
   world.loadLevel(startLevel)
   player.loadPosition()
+
+  signals.connect("level_completed", function()
+    local nextLevel = world.currentLevel + 1
+    if 0 < nextLevel and nextLevel <= #levels then
+      world.loadLevel(nextLevel)
+      player.loadPosition()
+    end
+  end)
 
   love.keyboard.setKeyRepeat(true)
   arrowKeys = {

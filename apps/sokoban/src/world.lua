@@ -131,6 +131,18 @@ local function updateTile(x, y, value)
   visualGrid[y][x] = value
 end
 
+local function checkLevelCompletion()
+  for _, row in pairs(visualGrid) do
+    for _, cell in pairs(row) do
+      if cell == world.symbols.box then
+        return false
+      end
+    end
+  end
+
+  return true
+end
+
 function world.moveBox(x, y, dx, dy)
   local nextDrawnTile = world.getTile(x + dx, y + dy)
 
@@ -142,16 +154,22 @@ function world.moveBox(x, y, dx, dy)
     return false
   end
 
-  if nextDrawnTile == world.symbols.storage then
-    updateTile(x + dx, y + dy, world.symbols.boxOnStorage)
-  else
-    updateTile(x + dx, y + dy, world.symbols.box)
-  end
-
   if world.getTile(x, y) == world.symbols.boxOnStorage then
     updateTile(x, y, world.symbols.storage)
   else
     updateTile(x, y, world.symbols.floor)
+  end
+
+  if nextDrawnTile == world.symbols.storage then
+    updateTile(x + dx, y + dy, world.symbols.boxOnStorage)
+
+    local isLevelCompleted = checkLevelCompletion()
+    if isLevelCompleted then
+      signals.send("level_completed")
+      return false
+    end
+  else
+    updateTile(x + dx, y + dy, world.symbols.box)
   end
 
   return true
