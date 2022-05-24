@@ -1,70 +1,56 @@
-local colors = {
-  background = { 40, 42, 54 },
-  eye = { 248, 248, 242 },
-  pupil = { 68, 71, 90 }
-}
+local eyes = {}
 
-local function drawEye(x, y, eyeRadius, pupilRadius)
-  local eye = {}
-  eye.x = x
-  eye.y = y
-  eye.radius = eyeRadius
+local function loadEye(x, y, eyeRadius, pupilRadius)
+  return {
+    eye = {
+      x = x,
+      y = y,
+      radius = eyeRadius
+    },
+    pupil = {
+      x = x,
+      y = y,
+      radius = pupilRadius
+    }
+  }
+end
 
-  local cursor = {}
-  cursor.dx = love.mouse.getX() - eye.x
-  cursor.dy = love.mouse.getY() - eye.y
-  cursor.distance = math.sqrt(cursor.dx ^ 2 + cursor.dy ^ 2)
+function love.load()
+  table.insert(eyes, loadEye(125, 150, 50, 15))
+  table.insert(eyes, loadEye(275, 150, 50, 15))
+end
 
-  local pupil = {}
-  pupil.radius = pupilRadius
-  local radiusDifference = eye.radius - pupil.radius
+function love.update(dt)
+  for _, v in pairs(eyes) do
+    local cursor = {
+      dx = love.mouse.getX() - v.eye.x,
+      dy = love.mouse.getY() - v.eye.y
+    }
+    cursor.distance = math.sqrt(cursor.dx ^ 2 + cursor.dy ^ 2)
 
-  if cursor.distance > radiusDifference then
-    pupil.x = eye.x + (cursor.dx * radiusDifference) / cursor.distance
-    pupil.y = eye.y + (cursor.dy * radiusDifference) / cursor.distance
-  else
-    pupil.x = eye.x + cursor.dx
-    pupil.y = eye.y + cursor.dy
+    local radiusDifference = v.eye.radius - v.pupil.radius
+    if cursor.distance > radiusDifference then
+      v.pupil.x = v.eye.x + (cursor.dx * radiusDifference) / cursor.distance
+      v.pupil.y = v.eye.y + (cursor.dy * radiusDifference) / cursor.distance
+    else
+      v.pupil.x = v.eye.x + cursor.dx
+      v.pupil.y = v.eye.y + cursor.dy
+    end
   end
+end
 
-  love.graphics.setBackgroundColor(
-    love.math.colorFromBytes(
-      colors.background[1],
-      colors.background[2],
-      colors.background[3]
-    )
-  )
+local function drawEye(v)
+  love.graphics.setColor(love.math.colorFromBytes(248, 248, 242))
+  love.graphics.circle('fill', v.eye.x, v.eye.y, v.eye.radius)
 
-  love.graphics.setColor(
-    love.math.colorFromBytes(
-      colors.eye[1],
-      colors.eye[2],
-      colors.eye[3]
-    )
-  )
-  love.graphics.circle(
-    'fill',
-    eye.x,
-    eye.y,
-    eye.radius
-  )
-
-  love.graphics.setColor(
-    love.math.colorFromBytes(
-      colors.pupil[1],
-      colors.pupil[2],
-      colors.pupil[3]
-    )
-  )
-  love.graphics.circle(
-    'fill',
-    pupil.x,
-    pupil.y,
-    pupil.radius
-  )
+  love.graphics.setColor(love.math.colorFromBytes(68, 71, 90))
+  love.graphics.circle('fill', v.pupil.x, v.pupil.y, v.pupil.radius)
 end
 
 function love.draw()
-  drawEye(125, 150, 50, 15)
-  drawEye(275, 150, 50, 15)
+  love.graphics.setBackgroundColor(love.math.colorFromBytes(40, 42, 54))
+
+  for _, v in pairs(eyes) do
+    drawEye(v)
+  end
 end
