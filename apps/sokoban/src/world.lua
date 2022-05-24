@@ -1,34 +1,74 @@
 world = {}
-world.tileSize = 64
-world.symbols = {
-  floor = ' ',
-  wall = '#',
-  box = '$',
-  storage = '.',
-  boxOnStorage = '*',
-  player = '@'
-}
-world.currentLevel = 0
 
-local initialPlayerPosition = {}
-local visualGrid = {}
-local colors = {
-  [world.symbols.floor] = { 40, 42, 54 },
-  [world.symbols.wall] = { 68, 71, 90 },
-  [world.symbols.box] = { 241, 250, 140 },
-  [world.symbols.storage] = { 255, 85, 85, 1 },
-  [world.symbols.boxOnStorage] = { 255, 184, 108 }
-}
+function world:load()
+  self.tileSize = 64
+  self.currentLevel = 0
+  self.symbols = {
+    floor = ' ',
+    wall = '#',
+    box = '$',
+    storage = '.',
+    boxOnStorage = '*',
+    initialPlayerPosition = '@'
+  }
+  self.colors = {
+    [self.symbols.floor] = { love.math.colorFromBytes(40, 42, 54) },
+    [self.symbols.wall] = { love.math.colorFromBytes(68, 71, 90) },
+    [self.symbols.box] = { love.math.colorFromBytes(241, 250, 140) },
+    [self.symbols.storage] = { love.math.colorFromBytes(255, 85, 85) },
+    [self.symbols.boxOnStorage] = { love.math.colorFromBytes(255, 184, 108) }
+  }
+  self.visualGrid = {}
+  self.initialPlayerPosition = { x = 0, y = 0 }
+
+  world:loadLevel(1)
+end
+
+function world:draw()
+  love.graphics.setBackgroundColor(self.colors[self.symbols.floor])
+
+  for y, row in pairs(self.visualGrid) do
+    for x, cell in pairs(row) do
+      local padding = self.tileSize / 8
+      love.graphics.setColor(self.colors[cell])
+
+      if cell == self.symbols.wall then
+        local padding = 1
+        love.graphics.rectangle(
+          'fill',
+          x * self.tileSize + padding,
+          y * self.tileSize + padding,
+          self.tileSize - padding * 2,
+          self.tileSize - padding * 2
+        )
+      end
+
+      if cell == self.symbols.box or cell == self.symbols.boxOnStorage then
+        love.graphics.rectangle(
+          'fill',
+          x * self.tileSize + padding,
+          y * self.tileSize + padding,
+          self.tileSize - padding * 2,
+          self.tileSize - padding * 2
+        )
+      end
+
+      if cell == self.symbols.storage then
+        love.graphics.circle(
+          'fill',
+          x * self.tileSize + padding * 4,
+          y * self.tileSize + padding * 4,
+          self.tileSize - padding * 6)
+      end
+    end
+  end
+end
 
 local function setResolution(level)
-  local mapDimensions = {}
-  mapDimensions.y = #levels[level]
-  mapDimensions.x = 0
+  local mapDimensions = { x = 0, y = #levels[level] }
 
   for _, row in pairs(levels[level]) do
-    if mapDimensions.x < #row then
-      mapDimensions.x = #row
-    end
+    if mapDimensions.x < #row then mapDimensions.x = #row end
   end
 
   local windowWidth = world.tileSize * (mapDimensions.x + 2)
@@ -36,140 +76,63 @@ local function setResolution(level)
   love.window.setMode(windowWidth, windowHeight, {})
 end
 
-local function updateInitialPlayerPosition(gridX, gridY)
-  initialPlayerPosition = {
-    x = gridX,
-    y = gridY
-  }
-end
+function world:loadLevel(level)
+  if level ~= self.currentLevel then setResolution(level) end
+  self.currentLevel = level
 
-function world.getInitialPlayerPosition()
-  return {
-    x = initialPlayerPosition.x * world.tileSize,
-    y = initialPlayerPosition.y * world.tileSize
-  }
-end
-
-function world.loadLevel(level)
-  if level ~= world.currentLevel then
-    setResolution(level)
-  end
-
-  visualGrid = {}
+  self.visualGrid = {}
   for y, row in pairs(levels[level]) do
-    visualGrid[y] = {}
+    self.visualGrid[y] = {}
     for x, cell in pairs(row) do
-      if cell == world.symbols.player then
-        updateInitialPlayerPosition(x, y)
-        visualGrid[y][x] = world.symbols.floor
+      if cell == self.symbols.initialPlayerPosition then
+        self.initialPlayerPosition = { x = x, y = y }
+        self.visualGrid[y][x] = self.symbols.floor
       else
-        visualGrid[y][x] = cell
-      end
-    end
-  end
-
-  world.currentLevel = level
-end
-
-function world.draw()
-  love.graphics.setBackgroundColor(
-    love.math.colorFromBytes(
-      colors[world.symbols.floor][1],
-      colors[world.symbols.floor][2],
-      colors[world.symbols.floor][3]
-    )
-  )
-
-  for y, row in pairs(visualGrid) do
-    for x, cell in pairs(row) do
-      local padding = world.tileSize / 8
-      love.graphics.setColor(
-        love.math.colorFromBytes(
-          colors[cell][1],
-          colors[cell][2],
-          colors[cell][3]
-        )
-      )
-
-      if cell == world.symbols.wall then
-        local padding = 1
-        love.graphics.rectangle(
-          'fill',
-          x * world.tileSize + padding,
-          y * world.tileSize + padding,
-          world.tileSize - padding * 2,
-          world.tileSize - padding * 2
-        )
-      end
-
-      if cell == world.symbols.box or cell == world.symbols.boxOnStorage then
-        love.graphics.rectangle(
-          'fill',
-          x * world.tileSize + padding,
-          y * world.tileSize + padding,
-          world.tileSize - padding * 2,
-          world.tileSize - padding * 2
-        )
-      end
-
-      if cell == world.symbols.storage then
-        love.graphics.circle(
-          'fill',
-          x * world.tileSize + padding * 4,
-          y * world.tileSize + padding * 4,
-          world.tileSize - padding * 6)
+        self.visualGrid[y][x] = cell
       end
     end
   end
 end
 
-function world.getTile(x, y)
-  return visualGrid[y][x]
+function world:getTile(x, y)
+  return self.visualGrid[y][x]
 end
 
 local function updateTile(x, y, value)
-  visualGrid[y][x] = value
+  world.visualGrid[y][x] = value
 end
 
 local function checkLevelCompletion()
-  for _, row in pairs(visualGrid) do
+  for _, row in pairs(world.visualGrid) do
     for _, cell in pairs(row) do
-      if cell == world.symbols.box then
-        return false
-      end
+      if cell == world.symbols.box then return false end
     end
   end
 
   return true
 end
 
-function world.moveBox(x, y, dx, dy)
-  local nextDrawnTile = world.getTile(x + dx, y + dy)
+function world:moveBox(x, y, dx, dy)
+  local nextDrawnTile = world:getTile(x + dx, y + dy)
+  if nextDrawnTile == self.symbols.wall or nextDrawnTile == nil then return false end
+  if nextDrawnTile == self.symbols.box or nextDrawnTile == self.symbols.boxOnStorage then return false end
 
-  if nextDrawnTile == world.symbols.wall or nextDrawnTile == nil then
-    return false
-  end
-
-  if nextDrawnTile == world.symbols.box or nextDrawnTile == world.symbols.boxOnStorage then
-    return false
-  end
-
-  if world.getTile(x, y) == world.symbols.boxOnStorage then
-    updateTile(x, y, world.symbols.storage)
+  if world:getTile(x, y) == self.symbols.boxOnStorage then
+    updateTile(x, y, self.symbols.storage)
   else
-    updateTile(x, y, world.symbols.floor)
+    updateTile(x, y, self.symbols.floor)
   end
 
-  if nextDrawnTile == world.symbols.storage then
-    updateTile(x + dx, y + dy, world.symbols.boxOnStorage)
+  if nextDrawnTile == self.symbols.storage then
+    updateTile(x + dx, y + dy, self.symbols.boxOnStorage)
 
     local isLevelCompleted = checkLevelCompletion()
     if isLevelCompleted then
-      signals.send("level_completed")
+      signals.send('level_completed')
       return false
     end
   else
-    updateTile(x + dx, y + dy, world.symbols.box)
+    updateTile(x + dx, y + dy, self.symbols.box)
   end
 
   return true

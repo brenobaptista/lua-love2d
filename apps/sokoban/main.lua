@@ -1,4 +1,4 @@
-signals = require("../signals/signals")
+signals = require('../signals/signals')
 require('src/levels')
 require('src/world')
 require('src/player')
@@ -6,15 +6,14 @@ require('src/player')
 local arrowKeys, levelKeys
 
 function love.load()
-  local startLevel = 1
-  world.loadLevel(startLevel)
-  player.loadPosition()
+  world:load()
+  player:load()
 
-  signals.connect("level_completed", function()
+  signals.connect('level_completed', function()
     local nextLevel = world.currentLevel + 1
     if 0 < nextLevel and nextLevel <= #levels then
-      world.loadLevel(nextLevel)
-      player.loadPosition()
+      world:loadLevel(nextLevel)
+      player:loadPosition()
     end
   end)
 
@@ -32,25 +31,24 @@ function love.load()
   }
 
   sounds = {}
-  sounds.blip = love.audio.newSource("audio/blip-sound.wav", "static")
-  sounds.music = love.audio.newSource("audio/game-music.mp3", "stream")
+  sounds.blip = love.audio.newSource('audio/blip-sound.wav', 'static')
+  sounds.music = love.audio.newSource('audio/game-music.mp3', 'stream')
   sounds.music:setLooping(true)
-
   sounds.music:play()
 end
 
 function love.update(dt)
-  player.updateDrawn(dt)
+  player:update(dt)
 end
 
 function love.draw()
-  world.draw()
-  player.draw()
+  world:draw()
+  player:draw()
 end
 
 local function handleArrowKeys(dx, dy)
-  if player.canMove(dx, dy) then
-    player.updateNextDrawn(dx, dy)
+  if player:canMove(dx, dy) then
+    player:updateNextDrawn(dx, dy)
     sounds.blip:play()
   end
 end
@@ -58,8 +56,8 @@ end
 local function handleLevelKeys(levelDifference)
   local selected = world.currentLevel + levelDifference
   if 0 < selected and selected <= #levels then
-    world.loadLevel(selected)
-    player.loadPosition()
+    world:loadLevel(selected)
+    player:loadPosition()
   end
 end
 
@@ -76,7 +74,7 @@ function love.keypressed(key)
     end
   end
 
-  if key == "m" then
+  if key == 'm' then
     sounds.music:stop()
   end
 end
