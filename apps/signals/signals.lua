@@ -5,7 +5,7 @@ signals.connect = function(signalName, callback, groupName)
   local id = #s + 1
   s[id] = {}
   s[id].callback = callback
-  s[id].signalName = signalName or ""
+  s[id].signalName = signalName or ''
   s[id].groupName = groupName
 
   return id
@@ -25,7 +25,7 @@ end
 
 signals.send = function(signalName, ...)
   for i, v in pairs(s) do
-    if s[i].signalName == signalName or s[i].signalName == "" then
+    if s[i].signalName == signalName or s[i].signalName == '' then
       s[i].callback(...)
     end
   end

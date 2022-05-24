@@ -7,11 +7,11 @@
 ```lua
 local monster = { isAlive = true }
 
-signals.connect("monsterKilled", function()
+signals.connect('monsterKilled', function()
   monster.isAlive = false
 end)
 
-signals.send("monsterKilled")
+signals.send('monsterKilled')
 print(monster.isAlive) -- false
 ```
 
@@ -21,14 +21,14 @@ print(monster.isAlive) -- false
 local monster = { isAlive = true }
 local score = 0
 
-signals.connect("monsterKilled", function()
+signals.connect('monsterKilled', function()
   monster.isAlive = false
 end)
-signals.connect("monsterKilled", function()
+signals.connect('monsterKilled', function()
   score = score + 10
 end)
 
-signals.send("monsterKilled")
+signals.send('monsterKilled')
 print(monster.isAlive) -- false
 print(score) -- 10
 ```
@@ -36,14 +36,14 @@ print(score) -- 10
 ## Passing parameters while sending signal
 
 ```lua
-local logKills = ""
-signals.connect("monsterKilled", function(sender)
-  logKills = logKills .. sender.name .. " has been killed!"
+local logKills = ''
+signals.connect('monsterKilled', function(sender)
+  logKills = logKills .. sender.name .. ' has been killed!'
 end)
 
-local monster = { name = "monster1" }
-signals.send("monsterKilled", monster)
-print(logKills) -- "monster1 has been killed!"
+local monster = { name = 'monster1' }
+signals.send('monsterKilled', monster)
+print(logKills) -- 'monster1 has been killed!'
 ```
 
 ## Triggering callbacks for every signal
@@ -51,16 +51,16 @@ print(logKills) -- "monster1 has been killed!"
 ```lua
 local score = 0
 
-signals.connect("monsterKilled", function()
+signals.connect('monsterKilled', function()
   score = score + 10
 end)
 
-signals.connect("", function()
+signals.connect('', function()
   -- will be called every time a signal is sent
   score = score + 10
 end)
 
-signals.send("monsterKilled")
+signals.send('monsterKilled')
 print(score) -- 20
 ```
 
@@ -69,12 +69,12 @@ print(score) -- 20
 ```lua
 local monster = { isAlive = true }
 
-local signalId = signals.connect("monsterKilled", function()
+local signalId = signals.connect('monsterKilled', function()
   monster.isAlive = false
 end)
 
 signals.disconnect(signalId)
-signals.send("monsterKilled")
+signals.send('monsterKilled')
 
 print(monster.isAlive) -- true
 ```
@@ -84,17 +84,17 @@ print(monster.isAlive) -- true
 ```lua
 local score = 0
 
-signals.connect("monsterKilled", function()
+signals.connect('monsterKilled', function()
   score = score + 10
-end, "group1")
-signals.connect("monsterKilled", function()
+end, 'group1')
+signals.connect('monsterKilled', function()
   score = score + 11
-end, "group1")
-signals.connect("monsterKilled", function()
+end, 'group1')
+signals.connect('monsterKilled', function()
   score = score + 12
-end, "group2")
+end, 'group2')
 
-signals.disconnectGroup("group1")
-signals.send("monsterKilled")
+signals.disconnectGroup('group1')
+signals.send('monsterKilled')
 print(score) -- 12
 ```
