@@ -30,6 +30,7 @@ function world:draw()
   for y, row in pairs(self.visualGrid) do
     for x, cell in pairs(row) do
       local padding = self.tileSize / 8
+      local radius = world.tileSize / 16
       love.graphics.setColor(self.colors[cell])
 
       if cell == self.symbols.wall then
@@ -39,7 +40,9 @@ function world:draw()
           x * self.tileSize + padding,
           y * self.tileSize + padding,
           self.tileSize - padding * 2,
-          self.tileSize - padding * 2
+          self.tileSize - padding * 2,
+          radius,
+          radius
         )
       end
 
@@ -49,16 +52,19 @@ function world:draw()
           x * self.tileSize + padding,
           y * self.tileSize + padding,
           self.tileSize - padding * 2,
-          self.tileSize - padding * 2
+          self.tileSize - padding * 2,
+          radius,
+          radius
         )
       end
 
       if cell == self.symbols.storage then
+        local padding = self.tileSize / 4
         love.graphics.circle(
           'fill',
-          x * self.tileSize + padding * 4,
-          y * self.tileSize + padding * 4,
-          self.tileSize - padding * 6)
+          x * self.tileSize + padding * 2,
+          y * self.tileSize + padding * 2,
+          self.tileSize - padding * 3.5)
       end
     end
   end

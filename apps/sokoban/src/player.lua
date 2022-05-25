@@ -16,13 +16,16 @@ end
 
 function player:draw()
   local padding = world.tileSize / 4
+  local radius = world.tileSize / 16
   love.graphics.setColor(self.color)
   love.graphics.rectangle(
     'fill',
     self.drawn.x + padding,
     self.drawn.y + padding,
     world.tileSize - padding * 2,
-    world.tileSize - padding * 2
+    world.tileSize - padding * 2,
+    radius,
+    radius
   )
 end
 
