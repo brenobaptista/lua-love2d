@@ -9,7 +9,7 @@ function love.load()
   world:load()
   player:load()
 
-  signals.connect('level_completed', function()
+  signals.connect('levelCompleted', function()
     local nextLevel = world.currentLevel + 1
     if 0 < nextLevel and nextLevel <= #levels then
       world:loadLevel(nextLevel)

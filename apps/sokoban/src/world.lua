@@ -134,7 +134,7 @@ function world:moveBox(x, y, dx, dy)
 
     local isLevelCompleted = checkLevelCompletion()
     if isLevelCompleted then
-      signals.send('level_completed')
+      signals.send('levelCompleted')
       return false
     end
   else
