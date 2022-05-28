@@ -1,4 +1,4 @@
-buttons = {}
+local buttons = {}
 local buttonsState = {}
 
 buttons.radius = 4
@@ -80,3 +80,5 @@ function buttons:setCursor()
   local found = findHoveredButton()
   if found then love.mouse.setCursor(self.cursor) else love.mouse.setCursor() end
 end
+
+return buttons

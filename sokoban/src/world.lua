@@ -1,4 +1,4 @@
-world = {}
+local world = {}
 
 function world:load()
   self.tileSize = 64
@@ -21,7 +21,7 @@ function world:load()
   self.visualGrid = {}
   self.initialPlayerPosition = { x = 0, y = 0 }
 
-  world:loadLevel(1)
+  self:loadLevel(1)
 end
 
 function world:draw()
@@ -30,7 +30,7 @@ function world:draw()
   for y, row in pairs(self.visualGrid) do
     for x, cell in pairs(row) do
       local padding = self.tileSize / 8
-      local radius = world.tileSize / 16
+      local radius = self.tileSize / 16
       love.graphics.setColor(self.colors[cell])
 
       if cell == self.symbols.wall then
@@ -71,9 +71,9 @@ function world:draw()
 end
 
 local function setResolution(level)
-  local mapDimensions = { x = 0, y = #levels[level] }
+  local mapDimensions = { x = 0, y = #Levels[level] }
 
-  for _, row in pairs(levels[level]) do
+  for _, row in pairs(Levels[level]) do
     if mapDimensions.x < #row then mapDimensions.x = #row end
   end
 
@@ -87,7 +87,7 @@ function world:loadLevel(level)
   self.currentLevel = level
 
   self.visualGrid = {}
-  for y, row in pairs(levels[level]) do
+  for y, row in pairs(Levels[level]) do
     self.visualGrid[y] = {}
     for x, cell in pairs(row) do
       if cell == self.symbols.initialPlayerPosition then
@@ -119,11 +119,11 @@ local function checkLevelCompletion()
 end
 
 function world:moveBox(x, y, dx, dy)
-  local nextDrawnTile = world:getTile(x + dx, y + dy)
+  local nextDrawnTile = self:getTile(x + dx, y + dy)
   if nextDrawnTile == self.symbols.wall or nextDrawnTile == nil then return false end
   if nextDrawnTile == self.symbols.box or nextDrawnTile == self.symbols.boxOnStorage then return false end
 
-  if world:getTile(x, y) == self.symbols.boxOnStorage then
+  if self:getTile(x, y) == self.symbols.boxOnStorage then
     updateTile(x, y, self.symbols.storage)
   else
     updateTile(x, y, self.symbols.floor)
@@ -134,7 +134,7 @@ function world:moveBox(x, y, dx, dy)
 
     local isLevelCompleted = checkLevelCompletion()
     if isLevelCompleted then
-      signals.send('levelCompleted')
+      Signals.send('levelCompleted')
       return false
     end
   else
@@ -143,3 +143,5 @@ function world:moveBox(x, y, dx, dy)
 
   return true
 end
+
+return world

@@ -1,4 +1,4 @@
-eyes = {}
+local eyes = {}
 local eyesState = {}
 
 function eyes.load(x, y, eyeRadius, pupilRadius)
@@ -46,3 +46,5 @@ function eyes.loop(callback)
     callback(eye)
   end
 end
+
+return eyes

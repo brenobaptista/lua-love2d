@@ -1,4 +1,4 @@
-require("buttons")
+local buttons = require("buttons")
 
 function love.load()
   buttons:load("Start Game", function() print("Starting game") end)

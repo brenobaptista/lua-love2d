@@ -1,4 +1,4 @@
-player = {}
+local player = {}
 
 function player:load()
   self.drawn = { x = 0, y = 0 }
@@ -6,7 +6,7 @@ function player:load()
   self.transitionSpeed = 25
   self.color = { love.math.colorFromBytes(189, 147, 249) }
 
-  player:loadPosition()
+  self:loadPosition()
 end
 
 function player:update(dt)
@@ -15,15 +15,15 @@ function player:update(dt)
 end
 
 function player:draw()
-  local padding = world.tileSize / 4
-  local radius = world.tileSize / 16
+  local padding = World.tileSize / 4
+  local radius = World.tileSize / 16
   love.graphics.setColor(self.color)
   love.graphics.rectangle(
     'fill',
     self.drawn.x + padding,
     self.drawn.y + padding,
-    world.tileSize - padding * 2,
-    world.tileSize - padding * 2,
+    World.tileSize - padding * 2,
+    World.tileSize - padding * 2,
     radius,
     radius
   )
@@ -31,8 +31,8 @@ end
 
 function player:loadPosition()
   local initialPlayerPosition = {
-    x = world.initialPlayerPosition.x * world.tileSize,
-    y = world.initialPlayerPosition.y * world.tileSize
+    x = World.initialPlayerPosition.x * World.tileSize,
+    y = World.initialPlayerPosition.y * World.tileSize
   }
   for axis, position in pairs(initialPlayerPosition) do
     self.drawn[axis] = position
@@ -41,21 +41,23 @@ function player:loadPosition()
 end
 
 function player:updateNextDrawn(dx, dy)
-  self.nextDrawn.x = self.nextDrawn.x + world.tileSize * dx
-  self.nextDrawn.y = self.nextDrawn.y + world.tileSize * dy
+  self.nextDrawn.x = self.nextDrawn.x + World.tileSize * dx
+  self.nextDrawn.y = self.nextDrawn.y + World.tileSize * dy
 end
 
 function player:canMove(dx, dy)
-  local nextDrawnX = (self.nextDrawn.x / world.tileSize) + dx
-  local nextDrawnY = (self.nextDrawn.y / world.tileSize) + dy
-  local nextDrawnTile = world:getTile(nextDrawnX, nextDrawnY)
+  local nextDrawnX = (self.nextDrawn.x / World.tileSize) + dx
+  local nextDrawnY = (self.nextDrawn.y / World.tileSize) + dy
+  local nextDrawnTile = World:getTile(nextDrawnX, nextDrawnY)
 
-  if nextDrawnTile == world.symbols.wall or nextDrawnTile == nil then return false end
+  if nextDrawnTile == World.symbols.wall or nextDrawnTile == nil then return false end
 
-  if nextDrawnTile == world.symbols.box or nextDrawnTile == world.symbols.boxOnStorage then
-    local didBoxMove = world:moveBox(nextDrawnX, nextDrawnY, dx, dy)
+  if nextDrawnTile == World.symbols.box or nextDrawnTile == World.symbols.boxOnStorage then
+    local didBoxMove = World:moveBox(nextDrawnX, nextDrawnY, dx, dy)
     if not didBoxMove then return false end
   end
 
   return true
 end
+
+return player

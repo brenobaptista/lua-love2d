@@ -1,4 +1,4 @@
-require("eyes")
+local eyes = require("eyes")
 
 function love.load()
   eyes.load(125, 150, 50, 15)

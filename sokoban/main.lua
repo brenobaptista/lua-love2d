@@ -1,18 +1,18 @@
-signals = require('../signals/signals')
-require('src/levels')
-require('src/world')
-require('src/player')
+Signals = require('../signals/signals')
+Levels = require('src/levels')
+World = require('src/world')
+local player = require('src/player')
 
-local arrowKeys, levelKeys
+local arrowKeys, levelKeys, sounds
 
 function love.load()
-  world:load()
+  World:load()
   player:load()
 
-  signals.connect('levelCompleted', function()
-    local nextLevel = world.currentLevel + 1
-    if 0 < nextLevel and nextLevel <= #levels then
-      world:loadLevel(nextLevel)
+  Signals.connect('levelCompleted', function()
+    local nextLevel = World.currentLevel + 1
+    if 0 < nextLevel and nextLevel <= #Levels then
+      World:loadLevel(nextLevel)
       player:loadPosition()
     end
   end)
@@ -42,7 +42,7 @@ function love.update(dt)
 end
 
 function love.draw()
-  world:draw()
+  World:draw()
   player:draw()
 end
 
@@ -54,9 +54,9 @@ local function handleArrowKeys(dx, dy)
 end
 
 local function handleLevelKeys(levelDifference)
-  local selected = world.currentLevel + levelDifference
-  if 0 < selected and selected <= #levels then
-    world:loadLevel(selected)
+  local selected = World.currentLevel + levelDifference
+  if 0 < selected and selected <= #Levels then
+    World:loadLevel(selected)
     player:loadPosition()
   end
 end
