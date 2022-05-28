@@ -16,26 +16,32 @@ function controls:load()
   }
 end
 
-function controls:handleArrowKeys(key)
-  for direction, gridDifference in pairs(self.arrowKeys) do
+local function handleArrowKeys(key)
+  for direction, gridDifference in pairs(controls.arrowKeys) do
     if key == direction then
       Signals.send('arrowKeyPressed', gridDifference[1], gridDifference[2])
     end
   end
 end
 
-function controls:handleLevelKeys(key)
-  for selection, levelDifference in pairs(self.levelKeys) do
+local function handleLevelKeys(key)
+  for selection, levelDifference in pairs(controls.levelKeys) do
     if key == selection then
-      Signals.send('levelKeyPressed', levelDifference)
+      Signals.send('loadLevelDifference', levelDifference)
     end
   end
 end
 
-function controls.handleMiscKeys(key)
+local function handleMiscKeys(key)
   if key == 'm' then
-    Signals.send('stopMusic', 'music')
+    Signals.send('stopAudio', 'music')
   end
+end
+
+function controls:keypressed(key)
+  handleArrowKeys(key)
+  handleLevelKeys(key)
+  handleMiscKeys(key)
 end
 
 return controls

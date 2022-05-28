@@ -1,4 +1,39 @@
+local levels = require('src/levels')
+
 local world = {}
+
+local function setResolution(level)
+  local mapDimensions = { x = 0, y = #levels[level] }
+
+  for _, row in pairs(levels[level]) do
+    if mapDimensions.x < #row then mapDimensions.x = #row end
+  end
+
+  local windowWidth = world.tileSize * (mapDimensions.x + 2)
+  local windowHeight = world.tileSize * (mapDimensions.y + 2)
+  love.window.setMode(windowWidth, windowHeight, {})
+end
+
+local function loadLevel(level)
+  if level <= 0 or level > #levels then return end
+  if level ~= world.currentLevel then setResolution(level) end
+  world.currentLevel = level
+
+  world.visualGrid = {}
+  for y, row in pairs(levels[level]) do
+    world.visualGrid[y] = {}
+    for x, cell in pairs(row) do
+      if cell == world.symbols.initialPlayerPosition then
+        world.initialPlayerPosition = { x = x, y = y }
+        world.visualGrid[y][x] = world.symbols.floor
+      else
+        world.visualGrid[y][x] = cell
+      end
+    end
+  end
+
+  Signals.send('loadPlayerPosition')
+end
 
 function world:load()
   self.tileSize = 64
@@ -21,7 +56,12 @@ function world:load()
   self.visualGrid = {}
   self.initialPlayerPosition = { x = 0, y = 0 }
 
-  self:loadLevel(1)
+  loadLevel(1)
+
+  Signals.connect('loadLevelDifference', function(levelDifference)
+    local level = self.currentLevel + levelDifference
+    loadLevel(level)
+  end)
 end
 
 function world:draw()
@@ -70,36 +110,6 @@ function world:draw()
   end
 end
 
-local function setResolution(level)
-  local mapDimensions = { x = 0, y = #Levels[level] }
-
-  for _, row in pairs(Levels[level]) do
-    if mapDimensions.x < #row then mapDimensions.x = #row end
-  end
-
-  local windowWidth = world.tileSize * (mapDimensions.x + 2)
-  local windowHeight = world.tileSize * (mapDimensions.y + 2)
-  love.window.setMode(windowWidth, windowHeight, {})
-end
-
-function world:loadLevel(level)
-  if level ~= self.currentLevel then setResolution(level) end
-  self.currentLevel = level
-
-  self.visualGrid = {}
-  for y, row in pairs(Levels[level]) do
-    self.visualGrid[y] = {}
-    for x, cell in pairs(row) do
-      if cell == self.symbols.initialPlayerPosition then
-        self.initialPlayerPosition = { x = x, y = y }
-        self.visualGrid[y][x] = self.symbols.floor
-      else
-        self.visualGrid[y][x] = cell
-      end
-    end
-  end
-end
-
 function world:getTile(x, y)
   return self.visualGrid[y][x]
 end
@@ -134,7 +144,7 @@ function world:moveBox(x, y, dx, dy)
 
     local isLevelCompleted = checkLevelCompletion()
     if isLevelCompleted then
-      Signals.send('levelCompleted')
+      Signals.send('loadLevelDifference', 1)
       return false
     end
   else

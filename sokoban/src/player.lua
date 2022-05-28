@@ -6,7 +6,16 @@ function player:load()
   self.transitionSpeed = 25
   self.color = { love.math.colorFromBytes(189, 147, 249) }
 
-  self:loadPosition()
+  Signals.connect('loadPlayerPosition', function()
+    local initialPlayerPosition = {
+      x = World.initialPlayerPosition.x * World.tileSize,
+      y = World.initialPlayerPosition.y * World.tileSize
+    }
+    for axis, position in pairs(initialPlayerPosition) do
+      self.drawn[axis] = position
+      self.nextDrawn[axis] = position
+    end
+  end)
 end
 
 function player:update(dt)
@@ -29,25 +38,9 @@ function player:draw()
   )
 end
 
-function player:loadPosition()
-  local initialPlayerPosition = {
-    x = World.initialPlayerPosition.x * World.tileSize,
-    y = World.initialPlayerPosition.y * World.tileSize
-  }
-  for axis, position in pairs(initialPlayerPosition) do
-    self.drawn[axis] = position
-    self.nextDrawn[axis] = position
-  end
-end
-
-function player:updateNextDrawn(dx, dy)
-  self.nextDrawn.x = self.nextDrawn.x + World.tileSize * dx
-  self.nextDrawn.y = self.nextDrawn.y + World.tileSize * dy
-end
-
-function player:canMove(dx, dy)
-  local nextDrawnX = (self.nextDrawn.x / World.tileSize) + dx
-  local nextDrawnY = (self.nextDrawn.y / World.tileSize) + dy
+local function canMove(dx, dy)
+  local nextDrawnX = (player.nextDrawn.x / World.tileSize) + dx
+  local nextDrawnY = (player.nextDrawn.y / World.tileSize) + dy
   local nextDrawnTile = World:getTile(nextDrawnX, nextDrawnY)
 
   if nextDrawnTile == World.symbols.wall or nextDrawnTile == nil then return false end
@@ -59,5 +52,14 @@ function player:canMove(dx, dy)
 
   return true
 end
+
+Signals.connect('arrowKeyPressed', function(dx, dy)
+  local canPlayerMove = canMove(dx, dy)
+  if canPlayerMove then
+    player.nextDrawn.x = player.nextDrawn.x + World.tileSize * dx
+    player.nextDrawn.y = player.nextDrawn.y + World.tileSize * dy
+    Signals.send('playAudio', 'blip')
+  end
+end)
 
 return player
