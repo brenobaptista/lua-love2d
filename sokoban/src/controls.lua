@@ -34,7 +34,7 @@ end
 
 local function handleMiscKeys(key)
   if key == 'm' then
-    Signals.send('stopAudio', 'music')
+    Audio.stop('music')
   end
 end
 

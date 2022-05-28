@@ -62,6 +62,9 @@ function world:load()
     local level = self.currentLevel + levelDifference
     loadLevel(level)
   end)
+
+  Audio.load('music', 'audio/game-music.mp3', 'stream', true)
+  Audio.play('music')
 end
 
 function world:draw()

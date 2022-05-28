@@ -16,6 +16,8 @@ function player:load()
       self.nextDrawn[axis] = position
     end
   end)
+
+  Audio.load('blip', 'audio/blip-sound.wav', 'static')
 end
 
 function player:update(dt)
@@ -58,7 +60,7 @@ Signals.connect('arrowKeyPressed', function(dx, dy)
   if canPlayerMove then
     player.nextDrawn.x = player.nextDrawn.x + World.tileSize * dx
     player.nextDrawn.y = player.nextDrawn.y + World.tileSize * dy
-    Signals.send('playAudio', 'blip')
+    Audio.play('blip')
   end
 end)
 
