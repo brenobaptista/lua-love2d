@@ -2,4 +2,4 @@
 
 > Eyes that follow the cursor, made with LÖVE
 
-![Preview](https://github.com/brenobaptista/lua-love2d/blob/main/previews/eyes.mp4)
+https://user-images.githubusercontent.com/47641641/170810664-ea844e9a-0474-4d06-9cdd-b399d08732ca.mp4
