@@ -2,7 +2,7 @@
 
 > Sokoban made with LÖVE
 
-![Preview](https://github.com/brenobaptista/lua-love2d/blob/main/previews/sokoban.mp4)
+https://user-images.githubusercontent.com/47641641/170810699-83137cc7-5d90-4404-b1df-159a4e32c82f.mp4
 
 ## Playing
 
