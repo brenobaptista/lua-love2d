@@ -2,4 +2,4 @@
 
 > Menu made with LÖVE
 
-![Preview](https://github.com/brenobaptista/lua-love2d/blob/main/previews/menu.mp4)
+https://user-images.githubusercontent.com/47641641/170811066-4f43e52c-b76b-434f-9d7b-76d7a225498f.mp4
