@@ -1,9 +1,10 @@
 Signals = require('../signals/signals')
 Levels = require('src/levels')
 World = require('src/world')
+local audio = require('src/audio')
 local player = require('src/player')
 
-local arrowKeys, levelKeys, sounds
+local arrowKeys, levelKeys
 
 function love.load()
   World:load()
@@ -30,11 +31,10 @@ function love.load()
     p = -1
   }
 
-  sounds = {}
-  sounds.blip = love.audio.newSource('audio/blip-sound.wav', 'static')
-  sounds.music = love.audio.newSource('audio/game-music.mp3', 'stream')
-  sounds.music:setLooping(true)
-  sounds.music:play()
+  audio.load('blip', 'audio/blip-sound.wav', 'static')
+  audio.load('music', 'audio/game-music.mp3', 'stream', true)
+
+  audio.play('music')
 end
 
 function love.update(dt)
@@ -49,7 +49,7 @@ end
 local function handleArrowKeys(dx, dy)
   if player:canMove(dx, dy) then
     player:updateNextDrawn(dx, dy)
-    sounds.blip:play()
+    audio.play('blip')
   end
 end
 
@@ -75,6 +75,6 @@ function love.keypressed(key)
   end
 
   if key == 'm' then
-    sounds.music:stop()
+    audio.stop('music')
   end
 end
