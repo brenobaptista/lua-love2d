@@ -16,9 +16,9 @@ signals.disconnect = function(index)
 end
 
 signals.disconnectGroup = function(group)
-  for _, signal in pairs(signalsState) do
+  for index, signal in pairs(signalsState) do
     if signal.group == group then
-      signal = nil
+      signalsState[index] = nil
     end
   end
 end
