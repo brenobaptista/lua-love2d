@@ -69,11 +69,11 @@ print(score) -- 20
 ```lua
 local monster = { isAlive = true }
 
-local signalId = signals.connect('monsterKilled', function()
+local signalIndex = signals.connect('monsterKilled', function()
   monster.isAlive = false
 end)
 
-signals.disconnect(signalId)
+signals.disconnect(signalIndex)
 signals.send('monsterKilled')
 
 print(monster.isAlive) -- true
