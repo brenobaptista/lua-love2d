@@ -2,7 +2,7 @@
 
 > Sokoban made with LÖVE
 
-![Gameplay GIF](https://github.com/brenobaptista/lua-love2d/blob/main/previews/sokoban-clip.gif)
+![Preview](https://github.com/brenobaptista/lua-love2d/blob/main/previews/sokoban.mp4)
 
 ## Playing
 
