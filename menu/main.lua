@@ -1,10 +1,10 @@
-local buttons = require("buttons")
+local buttons = require('buttons')
 
 function love.load()
-  buttons:load("Start Game", function() print("Starting game") end)
-  buttons:load("Load Game", function() print("Loading game") end)
-  buttons:load("Settings", function() print("Opening settings") end)
-  buttons:load("Exit", function() love.event.quit() end)
+  buttons:load('Start Game', function() print('Starting game') end)
+  buttons:load('Load Game', function() print('Loading game') end)
+  buttons:load('Settings', function() print('Opening settings') end)
+  buttons:load('Exit', function() love.event.quit() end)
 end
 
 function love.update()

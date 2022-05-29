@@ -6,7 +6,7 @@ buttons.margin = 16
 buttons.height = 64
 buttons.width = 256
 buttons.font = love.graphics.newFont('fonts/Inter/Inter-Thin.ttf', 32)
-buttons.cursor = love.mouse.getSystemCursor("hand")
+buttons.cursor = love.mouse.getSystemCursor('hand')
 
 function buttons:load(text, callback)
   table.insert(buttonsState, {
@@ -55,7 +55,7 @@ function buttons:draw(button)
     button.buttonX,
     button.buttonY + (self.height / 2) - math.ceil(self.font:getHeight() / 2),
     self.width,
-    "center"
+    'center'
   )
 end
 
