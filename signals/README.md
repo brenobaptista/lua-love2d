@@ -2,7 +2,23 @@
 
 > Signals module for LÖVE
 
-## Sending a signal
+## Testing
+
+Change directory into the `spec` folder:
+
+```sh
+cd signals/spec
+```
+
+Run the tests:
+
+```sh
+lua signals_spec.lua
+```
+
+## Documentation
+
+### Sending a signal
 
 ```lua
 local monster = { isAlive = true }
@@ -15,7 +31,7 @@ signals.send('monsterKilled')
 print(monster.isAlive) -- false
 ```
 
-## Connecting multiple callbacks to the same signal
+### Connecting multiple callbacks to the same signal
 
 ```lua
 local monster = { isAlive = true }
@@ -33,7 +49,7 @@ print(monster.isAlive) -- false
 print(score) -- 10
 ```
 
-## Passing parameters while sending signal
+### Passing parameters while sending a signal
 
 ```lua
 local logKills = ''
@@ -46,7 +62,7 @@ signals.send('monsterKilled', monster)
 print(logKills) -- 'monster1 has been killed!'
 ```
 
-## Triggering callbacks for every signal
+### Triggering callbacks for every signal
 
 ```lua
 local score = 0
@@ -64,7 +80,7 @@ signals.send('monsterKilled')
 print(score) -- 20
 ```
 
-## Disconnecting a signal
+### Disconnecting a signal
 
 ```lua
 local monster = { isAlive = true }
@@ -75,11 +91,10 @@ end)
 
 signals.disconnect(signalIndex)
 signals.send('monsterKilled')
-
 print(monster.isAlive) -- true
 ```
 
-## Disconnecting a group of signals
+### Disconnecting a group of signals
 
 ```lua
 local score = 0
