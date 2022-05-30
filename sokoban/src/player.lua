@@ -17,7 +17,7 @@ function player:load()
     end
   end)
 
-  Audio.load('blip', 'audio/blip-sound.wav', 'static')
+  Mixer.load('blip', 'audio/blip-sound.wav', 'static')
 end
 
 function player:update(dt)
@@ -49,7 +49,7 @@ end)
 Signals.connect('movePlayer', function(nextDrawnX, nextDrawnY)
   player.nextDrawn.x = nextDrawnX * World.tileSize
   player.nextDrawn.y = nextDrawnY * World.tileSize
-  Audio.play('blip')
+  Mixer.play('blip')
 end)
 
 return player

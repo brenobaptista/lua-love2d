@@ -34,7 +34,7 @@ end
 
 local function handleMiscKeys(key)
   if key == 'm' then
-    Audio.stop('music')
+    Mixer.stop('music')
   end
 end
 

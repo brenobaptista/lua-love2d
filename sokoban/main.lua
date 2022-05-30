@@ -1,4 +1,4 @@
-Audio = require('../audio/audio')
+Mixer = require('../mixer/mixer')
 Signals = require('../signals/signals')
 World = require('src/world')
 local controls = require('src/controls')

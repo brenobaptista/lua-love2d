@@ -63,8 +63,8 @@ function world:load()
     loadLevel(level)
   end)
 
-  Audio.load('music', 'audio/game-music.mp3', 'stream', true)
-  Audio.play('music')
+  Mixer.load('music', 'audio/game-music.mp3', 'stream', true)
+  Mixer.play('music')
 end
 
 function world:draw()
