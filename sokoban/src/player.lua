@@ -40,28 +40,16 @@ function player:draw()
   )
 end
 
-local function canMove(dx, dy)
+Signals.connect('arrowKeyPressed', function(dx, dy)
   local nextDrawnX = (player.nextDrawn.x / World.tileSize) + dx
   local nextDrawnY = (player.nextDrawn.y / World.tileSize) + dy
-  local nextDrawnTile = World:getTile(nextDrawnX, nextDrawnY)
+  Signals.send('playerTryingToMove', nextDrawnX, nextDrawnY, dx, dy)
+end)
 
-  if nextDrawnTile == World.symbols.wall or nextDrawnTile == nil then return false end
-
-  if nextDrawnTile == World.symbols.box or nextDrawnTile == World.symbols.boxOnStorage then
-    local didBoxMove = World:moveBox(nextDrawnX, nextDrawnY, dx, dy)
-    if not didBoxMove then return false end
-  end
-
-  return true
-end
-
-Signals.connect('arrowKeyPressed', function(dx, dy)
-  local canPlayerMove = canMove(dx, dy)
-  if canPlayerMove then
-    player.nextDrawn.x = player.nextDrawn.x + World.tileSize * dx
-    player.nextDrawn.y = player.nextDrawn.y + World.tileSize * dy
-    Audio.play('blip')
-  end
+Signals.connect('movePlayer', function(nextDrawnX, nextDrawnY)
+  player.nextDrawn.x = nextDrawnX * World.tileSize
+  player.nextDrawn.y = nextDrawnY * World.tileSize
+  Audio.play('blip')
 end)
 
 return player

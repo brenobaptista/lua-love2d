@@ -113,8 +113,8 @@ function world:draw()
   end
 end
 
-function world:getTile(x, y)
-  return self.visualGrid[y][x]
+local function getTile(x, y)
+  return world.visualGrid[y][x]
 end
 
 local function updateTile(x, y, value)
@@ -131,19 +131,23 @@ local function checkLevelCompletion()
   return true
 end
 
-function world:moveBox(x, y, dx, dy)
-  local nextDrawnTile = self:getTile(x + dx, y + dy)
-  if nextDrawnTile == self.symbols.wall or nextDrawnTile == nil then return false end
-  if nextDrawnTile == self.symbols.box or nextDrawnTile == self.symbols.boxOnStorage then return false end
+local function moveBox(boxX, boxY, dx, dy)
+  local currentBoxTile = getTile(boxX, boxY)
+  local nextBoxTile = getTile(boxX + dx, boxY + dy)
 
-  if self:getTile(x, y) == self.symbols.boxOnStorage then
-    updateTile(x, y, self.symbols.storage)
-  else
-    updateTile(x, y, self.symbols.floor)
+  local obstacles = { world.symbols.wall, world.symbols.box, world.symbols.boxOnStorage }
+  for _, obstacle in pairs(obstacles) do
+    if nextBoxTile == obstacle then return false end
   end
 
-  if nextDrawnTile == self.symbols.storage then
-    updateTile(x + dx, y + dy, self.symbols.boxOnStorage)
+  if currentBoxTile == world.symbols.boxOnStorage then
+    updateTile(boxX, boxY, world.symbols.storage)
+  else
+    updateTile(boxX, boxY, world.symbols.floor)
+  end
+
+  if nextBoxTile == world.symbols.storage then
+    updateTile(boxX + dx, boxY + dy, world.symbols.boxOnStorage)
 
     local isLevelCompleted = checkLevelCompletion()
     if isLevelCompleted then
@@ -151,10 +155,23 @@ function world:moveBox(x, y, dx, dy)
       return false
     end
   else
-    updateTile(x + dx, y + dy, self.symbols.box)
+    updateTile(boxX + dx, boxY + dy, world.symbols.box)
   end
 
   return true
 end
+
+Signals.connect('playerTryingToMove', function(nextDrawnX, nextDrawnY, dx, dy)
+  local nextDrawnTile = getTile(nextDrawnX, nextDrawnY)
+
+  if nextDrawnTile == world.symbols.floor or nextDrawnTile == world.symbols.storage then
+    Signals.send('movePlayer', nextDrawnX, nextDrawnY)
+  end
+
+  if nextDrawnTile == world.symbols.box or nextDrawnTile == world.symbols.boxOnStorage then
+    local didBoxMove = moveBox(nextDrawnX, nextDrawnY, dx, dy)
+    if didBoxMove then Signals.send('movePlayer', nextDrawnX, nextDrawnY) end
+  end
+end)
 
 return world
