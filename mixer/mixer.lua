@@ -31,7 +31,7 @@ end
 function mixer.loadMusic(name, filename, loop, volume)
   musicState[name] = love.audio.newSource(filename, 'stream')
   musicState[name]:setLooping(loop or false)
-  musicState[name]:setVolume(volumes.master * volumes.sound * (volume or 1))
+  musicState[name]:setVolume(volumes.master * volumes.music * (volume or 1))
 end
 
 function mixer.playMusic(name)

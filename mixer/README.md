@@ -6,7 +6,7 @@ This library is inspired by `pygame.mixer`, the pygame module for audio.
 
 ## Music
 
-Music refers to longer tracks of audio, like background music or songs.
+Music refers to long tracks of audio, like background music.
 
 ```lua
   mixer.loadMusic(name, filename, loop?, volume?)
@@ -18,7 +18,7 @@ Music refers to longer tracks of audio, like background music or songs.
 
 ## Sound
 
-Sound refers to small side effects such as crash noises or beeps, generally anything just a few seconds long.
+Sound refers to short tracks of audio, like crash noises or beeps.
 
 ```lua
   mixer.loadSound(name, filename, volume?)
