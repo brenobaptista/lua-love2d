@@ -15,4 +15,4 @@ $ love sokoban
 - Reset level by pressing R
 - Go to next level by pressing N
 - Go to previous level by pressing P
-- Stop music by pressing M
+- Toggle audio by pressing M
