@@ -1,4 +1,5 @@
 local controls = {}
+local isGameMuted = false
 
 function controls:load()
   love.keyboard.setKeyRepeat(true)
@@ -34,7 +35,15 @@ end
 
 local function handleMiscKeys(key)
   if key == 'm' then
-    Mixer.stop('music')
+    if isGameMuted then
+      Mixer.playMusic('background')
+      Mixer.unmuteSound('blip')
+      isGameMuted = false
+    else
+      Mixer.stopMusic('background')
+      Mixer.muteSound('blip')
+      isGameMuted = true
+    end
   end
 end
 
