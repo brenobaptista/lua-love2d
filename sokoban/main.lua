@@ -1,5 +1,5 @@
-Mixer = require('../mixer/mixer')
-Signals = require('../signals/signals')
+Mixer = require('libs/mixer')
+Signals = require('libs/signals')
 World = require('src/world')
 local controls = require('src/controls')
 local player = require('src/player')
