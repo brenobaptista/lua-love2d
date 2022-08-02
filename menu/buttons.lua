@@ -65,20 +65,20 @@ end
 
 local function findHoveredButton()
   for _, button in pairs(buttonsState) do
-    if button.isHovered then return true, button end
+    if button.isHovered then return button end
   end
 
-  return false
+  return nil
 end
 
 function buttons.handleClick()
-  local found, button = findHoveredButton()
-  if found then button.callback() end
+  local button = findHoveredButton()
+  if button then button.callback() end
 end
 
 function buttons:setCursor()
-  local found = findHoveredButton()
-  if found then love.mouse.setCursor(self.cursor) else love.mouse.setCursor() end
+  local button = findHoveredButton()
+  if button then love.mouse.setCursor(self.cursor) else love.mouse.setCursor() end
 end
 
 return buttons
