@@ -4,12 +4,7 @@
 
 https://user-images.githubusercontent.com/47641641/170810699-83137cc7-5d90-4404-b1df-159a4e32c82f.mp4
 
-## Playing
-
-```
-Running game on Linux:
-$ love sokoban
-```
+## How to play
 
 - Move player by using the arrow keys
 - Reset level by pressing R
