@@ -1,4 +1,4 @@
-local blast = require("blast")
+local blast = require('blast')
 
 local mouse = { x = 0, y = 0 }
 

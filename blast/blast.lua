@@ -4,7 +4,7 @@ local pSystem
 local function generateParticle(size)
   local particle = love.graphics.newCanvas(size, size)
   love.graphics.setCanvas(particle)
-  love.graphics.circle("fill", size / 2, size / 2, size / 2)
+  love.graphics.circle('fill', size / 2, size / 2, size / 2)
   love.graphics.setCanvas()
 
   return particle
