@@ -4,7 +4,7 @@ if arg[#arg] == '-debug' then DebugMode = true end
 local sti = require('libs/sti')
 local player = require('src/player')
 
-local realGravity, pixelsPerMeter, multiplier = 9.81, 32, 2
+local realGravity, pixelsPerMeter, multiplier = 9.81, 16, 2
 love.physics.setMeter(pixelsPerMeter)
 World = love.physics.newWorld(0, realGravity * pixelsPerMeter * multiplier)
 Map = sti('maps/map.lua', { 'box2d' })
@@ -39,8 +39,11 @@ function love.draw()
     love.graphics.setColor(love.math.colorFromBytes(248, 248, 242))
   end
 
-  Map:draw()
+  Map:draw(0, 0, 2, 2)
+  love.graphics.push()
+  love.graphics.scale(2, 2)
   player:draw()
+  love.graphics.pop()
 end
 
 function love.keypressed(key)

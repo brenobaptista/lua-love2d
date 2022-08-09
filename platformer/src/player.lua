@@ -9,8 +9,8 @@ function player:load()
   self.grounded = false
   self.defaultGracePeriod = 0.15
   self.jumpGraceTimer = self.defaultGracePeriod
-  self.jumpImpulse = 800
-  self.movementForce = 800
+  self.jumpImpulse = 400
+  self.movementForce = 400
 
   self.physics = {}
   self.physics.body = love.physics.newBody(World, self.initialX, self.initialY, 'dynamic')

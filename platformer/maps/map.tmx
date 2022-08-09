@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="32" tileheight="32" infinite="0" nextlayerid="7" nextobjectid="27">
+<map version="1.9" tiledversion="1.9.0" orientation="orthogonal" renderorder="right-down" width="40" height="23" tilewidth="16" tileheight="16" infinite="0" nextlayerid="7" nextobjectid="27">
  <editorsettings>
   <export target="map.lua" format="lua"/>
  </editorsettings>
- <tileset firstgid="1" name="tileset" tilewidth="32" tileheight="32" tilecount="4" columns="2">
-  <image source="assets/tileset.png" width="64" height="64"/>
+ <tileset firstgid="1" name="tileset" tilewidth="16" tileheight="16" tilecount="1" columns="1">
+  <image source="assets/tileset.png" width="16" height="16"/>
  </tileset>
  <objectgroup id="6" name="Player">
-  <object id="23" x="192" y="416" width="30" height="60"/>
+  <object id="23" x="80" y="80" width="15" height="30"/>
  </objectgroup>
  <objectgroup id="4" name="Platform">
   <properties>
    <property name="collidable" type="bool" value="true"/>
   </properties>
-  <object id="20" x="0" y="672" width="1280" height="64"/>
-  <object id="21" x="800" y="608" width="128" height="64"/>
-  <object id="22" x="960" y="512" width="128" height="64"/>
-  <object id="24" x="1248" y="0" width="32" height="672"/>
-  <object id="25" x="0" y="0" width="32" height="672"/>
-  <object id="26" x="32" y="0" width="1216" height="32"/>
+  <object id="20" x="0" y="336" width="640" height="32"/>
+  <object id="21" x="368" y="304" width="48" height="32"/>
+  <object id="22" x="432" y="256" width="48" height="32"/>
+  <object id="24" x="624" y="0" width="16" height="336"/>
+  <object id="25" x="0" y="0" width="16" height="336"/>
+  <object id="26" x="16" y="0" width="608" height="16"/>
  </objectgroup>
  <layer id="1" name="Ground" width="40" height="23">
   <data encoding="csv">
@@ -38,11 +38,11 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,1,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1,1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,
 1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
 </data>
