@@ -56,6 +56,7 @@ function player:draw()
 
   if DebugMode then
     love.graphics.setColor(love.math.colorFromBytes(80, 250, 123))
+    love.graphics.print(tostring(self.grounded), 16)
     love.graphics.rectangle(
       'line',
       self.physics.body:getX() - self.width / 2 + 1,
