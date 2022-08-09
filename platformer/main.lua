@@ -4,7 +4,7 @@ if arg[#arg] == '-debug' then DebugMode = true end
 local sti = require('libs/sti')
 local player = require('src/player')
 
-local realGravity, pixelsPerMeter, multiplier = 9.81, 16, 2
+local realGravity, pixelsPerMeter, multiplier = 9.81, 16, 3
 love.physics.setMeter(pixelsPerMeter)
 World = love.physics.newWorld(0, realGravity * pixelsPerMeter * multiplier)
 Map = sti('maps/map.lua', { 'box2d' })

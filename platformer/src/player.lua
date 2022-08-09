@@ -3,20 +3,21 @@ local player = {}
 function player:load()
   self.width = Map.layers['Player'].objects[1].width
   self.height = Map.layers['Player'].objects[1].height
+  self.radius = Map.layers['Player'].objects[1].width / 2
   self.initialX = Map.layers['Player'].objects[1].x + self.width / 2
   self.initialY = Map.layers['Player'].objects[1].y + self.height / 2
 
   self.grounded = false
   self.defaultGracePeriod = 0.15
   self.jumpGraceTimer = self.defaultGracePeriod
-  self.jumpImpulse = 400
-  self.movementForce = 400
+  self.jumpImpulse = 200
+  self.movementForce = 200
 
   self.physics = {}
   self.physics.body = love.physics.newBody(World, self.initialX, self.initialY, 'dynamic')
   self.physics.body:setFixedRotation(true)
   self.physics.body:setLinearDamping(1)
-  self.physics.shape = love.physics.newRectangleShape(self.width, self.height)
+  self.physics.shape = love.physics.newCircleShape(self.radius)
   self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
   self.physics.sensorShape = love.physics.newRectangleShape(0, self.height / 2, self.width - 2, 2)
   self.physics.sensorFixture = love.physics.newFixture(self.physics.body, self.physics.sensorShape, 0)
@@ -46,12 +47,11 @@ end
 
 function player:draw()
   love.graphics.setColor(love.math.colorFromBytes(189, 147, 249))
-  love.graphics.rectangle(
+  love.graphics.circle(
     'line',
-    self.physics.body:getX() - self.width / 2,
-    self.physics.body:getY() - self.height / 2,
-    self.width,
-    self.height
+    self.physics.body:getX(),
+    self.physics.body:getY(),
+    self.radius
   )
 
   if DebugMode then
