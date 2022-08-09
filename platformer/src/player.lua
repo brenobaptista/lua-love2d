@@ -68,16 +68,19 @@ function player:draw()
   love.graphics.setColor(1, 1, 1)
 end
 
-function player:beginContact(a, b)
+function player:beginContact(a, b, collision)
   if a == self.physics.sensorFixture or b == self.physics.sensorFixture then
+    self.currentGroundCollision = collision
     self.grounded = true
     self.jumpGraceTimer = self.defaultGracePeriod
   end
 end
 
-function player:endContact(a, b)
+function player:endContact(a, b, collision)
   if a == self.physics.sensorFixture or b == self.physics.sensorFixture then
-    self.grounded = false
+    if self.currentGroundCollision == collision then
+      self.grounded = false
+    end
   end
 end
 

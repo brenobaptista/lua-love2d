@@ -9,12 +9,12 @@ love.physics.setMeter(pixelsPerMeter)
 World = love.physics.newWorld(0, realGravity * pixelsPerMeter * multiplier)
 Map = sti('maps/map.lua', { 'box2d' })
 
-local function beginContact(a, b)
-  player:beginContact(a, b)
+local function beginContact(a, b, collision)
+  player:beginContact(a, b, collision)
 end
 
-local function endContact(a, b)
-  player:endContact(a, b)
+local function endContact(a, b, collision)
+  player:endContact(a, b, collision)
 end
 
 function love.load()
