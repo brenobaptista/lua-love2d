@@ -47,7 +47,7 @@ end
 function player:draw()
   love.graphics.setColor(love.math.colorFromBytes(189, 147, 249))
   love.graphics.rectangle(
-    'fill',
+    'line',
     self.physics.body:getX() - self.width / 2,
     self.physics.body:getY() - self.height / 2,
     self.width,
@@ -57,7 +57,7 @@ function player:draw()
   if DebugMode then
     love.graphics.setColor(love.math.colorFromBytes(80, 250, 123))
     love.graphics.rectangle(
-      'fill',
+      'line',
       self.physics.body:getX() - self.width / 2 + 1,
       self.physics.body:getY() - 1 + self.height / 2,
       self.width - 2,
