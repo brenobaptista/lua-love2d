@@ -14,7 +14,7 @@
    <ellipse/>
   </object>
  </objectgroup>
- <objectgroup id="4" name="Platform">
+ <objectgroup id="4" name="Collision">
   <properties>
    <property name="collidable" type="bool" value="true"/>
   </properties>
@@ -26,7 +26,7 @@
   <object id="26" x="16" y="0" width="608" height="16"/>
   <object id="28" x="448" y="208" width="176" height="32"/>
  </objectgroup>
- <layer id="1" name="Ground" width="40" height="23">
+ <layer id="1" name="Static" width="40" height="23">
   <data encoding="csv">
 19,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,27,20,
 23,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,21,

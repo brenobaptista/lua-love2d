@@ -23,7 +23,7 @@ function love.load()
   player:load()
 
   if not DebugMode then
-    Map.layers['Platform'].visible = false
+    Map.layers['Collision'].visible = false
     Map.layers['Player'].visible = false
   end
 end
