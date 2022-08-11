@@ -22,8 +22,12 @@ function blast.update(dt)
   pSystem:update(dt)
 end
 
-function blast.draw(x, y)
-  love.graphics.draw(pSystem, x, y)
+function blast.draw()
+  love.graphics.draw(pSystem)
+end
+
+function blast.setPosition(x, y)
+  pSystem:setPosition(x, y)
 end
 
 function blast.emit()
