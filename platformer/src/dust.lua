@@ -12,7 +12,7 @@ end
 
 function dust.load()
   local particle = generateParticle(4)
-  pSystem = love.graphics.newParticleSystem(particle, 100)
+  pSystem = love.graphics.newParticleSystem(particle, 10)
   pSystem:setParticleLifetime(0.1, 0.2)
   pSystem:setColors(1, 1, 1, 0.4, 0.5, 0.5, 0.5, 0.1)
   pSystem:setSizes(0.25, 0.5)

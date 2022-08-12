@@ -1,7 +1,7 @@
 return {
   version = "1.9",
   luaversion = "5.1",
-  tiledversion = "1.9.0",
+  tiledversion = "1.9.1",
   class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
@@ -10,7 +10,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 7,
-  nextobjectid = 55,
+  nextobjectid = 61,
   properties = {},
   tilesets = {
     {
@@ -241,112 +241,6 @@ return {
           properties = {}
         },
         {
-          id = 33,
-          name = "",
-          class = "",
-          shape = "rectangle",
-          x = 464,
-          y = 208,
-          width = 160,
-          height = 128,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 37,
-          name = "",
-          class = "",
-          shape = "polygon",
-          x = 464,
-          y = 320,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 0, y = -32 },
-            { x = -16, y = -16 },
-            { x = -16, y = 0 },
-            { x = -32, y = 16 },
-            { x = 0, y = 16 }
-          },
-          properties = {}
-        },
-        {
-          id = 42,
-          name = "",
-          class = "",
-          shape = "polygon",
-          x = 464,
-          y = 224,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = 0, y = -16 },
-            { x = -16, y = -16 },
-            { x = -16, y = 16 },
-            { x = -32, y = 32 },
-            { x = 0, y = 32 }
-          },
-          properties = {}
-        },
-        {
-          id = 43,
-          name = "",
-          class = "",
-          shape = "rectangle",
-          x = 384,
-          y = 256,
-          width = 80,
-          height = 16,
-          rotation = 0,
-          visible = true,
-          properties = {}
-        },
-        {
-          id = 47,
-          name = "",
-          class = "",
-          shape = "polygon",
-          x = 416,
-          y = 272,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = -32, y = 0 },
-            { x = -16, y = 16 },
-            { x = 16, y = 16 },
-            { x = 32, y = 0 }
-          },
-          properties = {}
-        },
-        {
-          id = 48,
-          name = "",
-          class = "",
-          shape = "polygon",
-          x = 464,
-          y = 272,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          polygon = {
-            { x = 0, y = 0 },
-            { x = -16, y = 0 },
-            { x = 0, y = 16 }
-          },
-          properties = {}
-        },
-        {
           id = 52,
           name = "",
           class = "",
@@ -398,6 +292,92 @@ return {
             { x = -16, y = -16 },
             { x = -16, y = -48 },
             { x = 0, y = -48 }
+          },
+          properties = {}
+        },
+        {
+          id = 55,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 448,
+          y = 208,
+          width = 176,
+          height = 64,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 56,
+          name = "",
+          class = "",
+          shape = "rectangle",
+          x = 464,
+          y = 272,
+          width = 160,
+          height = 64,
+          rotation = 0,
+          visible = true,
+          properties = {}
+        },
+        {
+          id = 57,
+          name = "",
+          class = "",
+          shape = "polygon",
+          x = 448,
+          y = 240,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          polygon = {
+            { x = 0, y = 0 },
+            { x = -16, y = 16 },
+            { x = -64, y = 16 },
+            { x = -64, y = 32 },
+            { x = -48, y = 48 },
+            { x = -16, y = 48 },
+            { x = 0, y = 32 }
+          },
+          properties = {}
+        },
+        {
+          id = 59,
+          name = "",
+          class = "",
+          shape = "polygon",
+          x = 464,
+          y = 272,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          polygon = {
+            { x = 0, y = 0 },
+            { x = -16, y = 0 },
+            { x = 0, y = 16 }
+          },
+          properties = {}
+        },
+        {
+          id = 60,
+          name = "",
+          class = "",
+          shape = "polygon",
+          x = 464,
+          y = 288,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          polygon = {
+            { x = 0, y = 0 },
+            { x = -16, y = 16 },
+            { x = -16, y = 32 },
+            { x = -32, y = 48 },
+            { x = 0, y = 48 }
           },
           properties = {}
         }
