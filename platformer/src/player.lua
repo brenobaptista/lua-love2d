@@ -14,6 +14,7 @@ function player:load()
   self.jumpGraceTimer = self.defaultGracePeriod
   self.jumpImpulse = 200
   self.movementForce = 200
+  self.groundCollisions = {}
 
   self.physics = {}
   self.physics.body = love.physics.newBody(World, self.initialX, self.initialY, 'dynamic')
@@ -88,7 +89,7 @@ end
 
 function player:beginContact(a, b, collision)
   if a == self.physics.sensorFixture or b == self.physics.sensorFixture then
-    self.currentGroundCollision = collision
+    table.insert(self.groundCollisions, collision)
     self.grounded = true
     self.jumpGraceTimer = self.defaultGracePeriod
   end
@@ -96,9 +97,16 @@ end
 
 function player:endContact(a, b, collision)
   if a == self.physics.sensorFixture or b == self.physics.sensorFixture then
-    if self.currentGroundCollision == collision then
-      self.grounded = false
+    for position, groundCollision in pairs(self.groundCollisions) do
+      if groundCollision == collision then
+        table.remove(self.groundCollisions, position)
+        break
+      end
     end
+  end
+
+  if #self.groundCollisions == 0 then
+    self.grounded = false
   end
 end
 
