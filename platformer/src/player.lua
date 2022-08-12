@@ -1,3 +1,5 @@
+local dust = require('src/dust')
+
 local player = {}
 
 function player:load()
@@ -22,6 +24,9 @@ function player:load()
   self.physics.sensorShape = love.physics.newRectangleShape(0, self.height / 2, self.width - 2, 2)
   self.physics.sensorFixture = love.physics.newFixture(self.physics.body, self.physics.sensorShape, 0)
   self.physics.sensorFixture:setSensor(true)
+
+  self.xVelEmitDust = 20
+  dust.load()
 end
 
 local function move(self)
@@ -40,9 +45,20 @@ local function decreaseGraceTimer(self, dt)
   end
 end
 
+local function emitDust(self)
+  local xVel, _ = self.physics.body:getLinearVelocity()
+  if self.grounded and math.abs(xVel) > self.xVelEmitDust then
+    dust.setPosition(self.physics.body:getX(), self.physics.body:getY() + self.radius)
+    dust.emit()
+  end
+end
+
 function player:update(dt)
   move(self)
   decreaseGraceTimer(self, dt)
+
+  emitDust(self)
+  dust.update(dt)
 end
 
 function player:draw()
@@ -67,6 +83,7 @@ function player:draw()
   end
 
   love.graphics.setColor(1, 1, 1)
+  dust.draw()
 end
 
 function player:beginContact(a, b, collision)
