@@ -2,6 +2,7 @@ DebugMode = false
 if arg[#arg] == '-debug' then DebugMode = true end
 
 local sti = require('libs/sti')
+local camera = require('src/camera')
 local player = require('src/player')
 
 local realGravity, pixelsPerMeter, multiplier = 9.81, 16, 3
@@ -31,6 +32,9 @@ end
 function love.update(dt)
   World:update(dt)
   player:update(dt)
+
+  local x, _ = player:getPosition()
+  camera:setPosition(x, 0)
 end
 
 function love.draw()
@@ -39,11 +43,10 @@ function love.draw()
     love.graphics.setColor(love.math.colorFromBytes(248, 248, 242))
   end
 
-  Map:draw(0, 0, 2, 2)
-  love.graphics.push()
-  love.graphics.scale(2, 2)
-  player:draw()
-  love.graphics.pop()
+  Map:draw(-camera.translateX, -camera.translateY, camera.scale, camera.scale)
+  camera:draw(function()
+    player:draw()
+  end)
 end
 
 function love.keypressed(key)

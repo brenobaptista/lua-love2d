@@ -117,4 +117,9 @@ function player:jump()
   end
 end
 
+function player:getPosition()
+  local x, y = self.physics.body:getPosition()
+  return x, y
+end
+
 return player
