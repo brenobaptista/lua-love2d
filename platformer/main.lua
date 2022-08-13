@@ -33,8 +33,8 @@ function love.update(dt)
   World:update(dt)
   player:update(dt)
 
-  local x, _ = player:getPosition()
-  camera:setPosition(x, 0)
+  local x, y = player:getPosition()
+  camera:setPosition(x, y)
 end
 
 function love.draw()

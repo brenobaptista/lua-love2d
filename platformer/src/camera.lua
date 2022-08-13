@@ -16,7 +16,10 @@ function camera:setPosition(x, y)
   local mapWidth = Map.width * Map.tilewidth
   self.translateX = math.max(x - love.graphics.getWidth() / 2 / self.scale, 0)
   self.translateX = math.min(self.translateX, mapWidth - love.graphics.getWidth() / 2)
-  self.translateY = y
+
+  local mapHeight = Map.height * Map.tileheight
+  self.translateY = math.max(y - love.graphics.getHeight() / 2 / self.scale, 0)
+  self.translateY = math.min(self.translateY, mapHeight - love.graphics.getHeight() / 2)
 end
 
 return camera
