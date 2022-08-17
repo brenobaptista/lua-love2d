@@ -6,7 +6,6 @@ local function generateParticle(size)
   love.graphics.setCanvas(particle)
   love.graphics.circle('fill', size / 2, size / 2, size / 2)
   love.graphics.setCanvas()
-
   return particle
 end
 

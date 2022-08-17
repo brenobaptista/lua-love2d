@@ -32,7 +32,7 @@ local function loadLevel(level)
     end
   end
 
-  Signals.send('loadPlayerPosition')
+  Signal.send('loadPlayerPosition')
 end
 
 function world:load()
@@ -58,7 +58,7 @@ function world:load()
 
   loadLevel(1)
 
-  Signals.connect('loadLevelDifference', function(levelDifference)
+  Signal.connect('loadLevelDifference', function(levelDifference)
     local level = self.currentLevel + levelDifference
     loadLevel(level)
   end)
@@ -111,6 +111,8 @@ function world:draw()
       end
     end
   end
+
+  love.graphics.setColor(1, 1, 1)
 end
 
 local function getTile(x, y)
@@ -151,7 +153,7 @@ local function moveBox(boxX, boxY, dx, dy)
 
     local isLevelCompleted = checkLevelCompletion()
     if isLevelCompleted then
-      Signals.send('loadLevelDifference', 1)
+      Signal.send('loadLevelDifference', 1)
       return false
     end
   else
@@ -161,16 +163,16 @@ local function moveBox(boxX, boxY, dx, dy)
   return true
 end
 
-Signals.connect('playerTryingToMove', function(nextDrawnX, nextDrawnY, dx, dy)
+Signal.connect('playerTryingToMove', function(nextDrawnX, nextDrawnY, dx, dy)
   local nextDrawnTile = getTile(nextDrawnX, nextDrawnY)
 
   if nextDrawnTile == world.symbols.floor or nextDrawnTile == world.symbols.storage then
-    Signals.send('movePlayer', nextDrawnX, nextDrawnY)
+    Signal.send('movePlayer', nextDrawnX, nextDrawnY)
   end
 
   if nextDrawnTile == world.symbols.box or nextDrawnTile == world.symbols.boxOnStorage then
     local didBoxMove = moveBox(nextDrawnX, nextDrawnY, dx, dy)
-    if didBoxMove then Signals.send('movePlayer', nextDrawnX, nextDrawnY) end
+    if didBoxMove then Signal.send('movePlayer', nextDrawnX, nextDrawnY) end
   end
 end)
 

@@ -20,7 +20,7 @@ end
 local function handleArrowKeys(key)
   for direction, gridDifference in pairs(controls.arrowKeys) do
     if key == direction then
-      Signals.send('arrowKeyPressed', gridDifference[1], gridDifference[2])
+      Signal.send('arrowKeyPressed', gridDifference[1], gridDifference[2])
     end
   end
 end
@@ -28,7 +28,7 @@ end
 local function handleLevelKeys(key)
   for selection, levelDifference in pairs(controls.levelKeys) do
     if key == selection then
-      Signals.send('loadLevelDifference', levelDifference)
+      Signal.send('loadLevelDifference', levelDifference)
     end
   end
 end

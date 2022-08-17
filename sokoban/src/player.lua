@@ -6,7 +6,7 @@ function player:load()
   self.transitionSpeed = 25
   self.color = { love.math.colorFromBytes(189, 147, 249) }
 
-  Signals.connect('loadPlayerPosition', function()
+  Signal.connect('loadPlayerPosition', function()
     local initialPlayerPosition = {
       x = World.initialPlayerPosition.x * World.tileSize,
       y = World.initialPlayerPosition.y * World.tileSize
@@ -38,15 +38,16 @@ function player:draw()
     radius,
     radius
   )
+  love.graphics.setColor(1, 1, 1)
 end
 
-Signals.connect('arrowKeyPressed', function(dx, dy)
+Signal.connect('arrowKeyPressed', function(dx, dy)
   local nextDrawnX = (player.nextDrawn.x / World.tileSize) + dx
   local nextDrawnY = (player.nextDrawn.y / World.tileSize) + dy
-  Signals.send('playerTryingToMove', nextDrawnX, nextDrawnY, dx, dy)
+  Signal.send('playerTryingToMove', nextDrawnX, nextDrawnY, dx, dy)
 end)
 
-Signals.connect('movePlayer', function(nextDrawnX, nextDrawnY)
+Signal.connect('movePlayer', function(nextDrawnX, nextDrawnY)
   player.nextDrawn.x = nextDrawnX * World.tileSize
   player.nextDrawn.y = nextDrawnY * World.tileSize
   Mixer.playSound('blip')

@@ -39,9 +39,6 @@ end
 
 function love.draw()
   love.graphics.setBackgroundColor(love.math.colorFromBytes(40, 42, 54))
-  if DebugMode then
-    love.graphics.setColor(love.math.colorFromBytes(248, 248, 242))
-  end
 
   Map:draw(-camera.translateX, -camera.translateY, camera.scale, camera.scale)
   camera:draw(function()

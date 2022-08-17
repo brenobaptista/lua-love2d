@@ -1,19 +1,19 @@
-# Signals
+# Signal
 
-> Signals module for LÖVE
+> Signal module for LÖVE
 
 ## Testing
 
 Change directory into the `spec` folder:
 
 ```sh
-cd signals/spec
+cd signal/spec
 ```
 
 Run the tests:
 
 ```sh
-lua signals_spec.lua
+lua signal_spec.lua
 ```
 
 ## Documentation
@@ -23,11 +23,11 @@ lua signals_spec.lua
 ```lua
 local monster = { isAlive = true }
 
-signals.connect('monsterKilled', function()
+signal.connect('monsterKilled', function()
   monster.isAlive = false
 end)
 
-signals.send('monsterKilled')
+signal.send('monsterKilled')
 print(monster.isAlive) -- false
 ```
 
@@ -37,14 +37,14 @@ print(monster.isAlive) -- false
 local monster = { isAlive = true }
 local score = 0
 
-signals.connect('monsterKilled', function()
+signal.connect('monsterKilled', function()
   monster.isAlive = false
 end)
-signals.connect('monsterKilled', function()
+signal.connect('monsterKilled', function()
   score = score + 10
 end)
 
-signals.send('monsterKilled')
+signal.send('monsterKilled')
 print(monster.isAlive) -- false
 print(score) -- 10
 ```
@@ -53,12 +53,12 @@ print(score) -- 10
 
 ```lua
 local logKills = ''
-signals.connect('monsterKilled', function(sender)
+signal.connect('monsterKilled', function(sender)
   logKills = logKills .. sender.name .. ' has been killed!'
 end)
 
 local monster = { name = 'monster1' }
-signals.send('monsterKilled', monster)
+signal.send('monsterKilled', monster)
 print(logKills) -- 'monster1 has been killed!'
 ```
 
@@ -67,16 +67,16 @@ print(logKills) -- 'monster1 has been killed!'
 ```lua
 local score = 0
 
-signals.connect('monsterKilled', function()
+signal.connect('monsterKilled', function()
   score = score + 10
 end)
 
-signals.connect('', function()
+signal.connect('', function()
   -- will be called every time a signal is sent
   score = score + 10
 end)
 
-signals.send('monsterKilled')
+signal.send('monsterKilled')
 print(score) -- 20
 ```
 
@@ -85,12 +85,12 @@ print(score) -- 20
 ```lua
 local monster = { isAlive = true }
 
-local signalIndex = signals.connect('monsterKilled', function()
+local signalIndex = signal.connect('monsterKilled', function()
   monster.isAlive = false
 end)
 
-signals.disconnect(signalIndex)
-signals.send('monsterKilled')
+signal.disconnect(signalIndex)
+signal.send('monsterKilled')
 print(monster.isAlive) -- true
 ```
 
@@ -99,17 +99,17 @@ print(monster.isAlive) -- true
 ```lua
 local score = 0
 
-signals.connect('monsterKilled', function()
+signal.connect('monsterKilled', function()
   score = score + 10
 end, 'group1')
-signals.connect('monsterKilled', function()
+signal.connect('monsterKilled', function()
   score = score + 11
 end, 'group1')
-signals.connect('monsterKilled', function()
+signal.connect('monsterKilled', function()
   score = score + 12
 end, 'group2')
 
-signals.disconnectGroup('group1')
-signals.send('monsterKilled')
+signal.disconnectGroup('group1')
+signal.send('monsterKilled')
 print(score) -- 12
 ```
