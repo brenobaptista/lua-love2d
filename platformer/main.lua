@@ -4,6 +4,7 @@ if arg[#arg] == '-debug' then DebugMode = true end
 local sti = require('libs/sti')
 local camera = require('src/camera')
 local player = require('src/player')
+local stone = require('src/stone')
 
 local realGravity, pixelsPerMeter, multiplier = 9.81, 16, 3
 love.physics.setMeter(pixelsPerMeter)
@@ -22,9 +23,11 @@ function love.load()
   World:setCallbacks(beginContact, endContact)
   Map:box2d_init(World)
   player:load()
+  stone.loadAll()
 
   if not DebugMode then
     Map.layers['Collision'].visible = false
+    Map.layers['Stone'].visible = false
     Map.layers['Player'].visible = false
   end
 end
@@ -43,6 +46,7 @@ function love.draw()
   Map:draw(-camera.translateX, -camera.translateY, camera.scale, camera.scale)
   camera:draw(function()
     player:draw()
+    stone.drawAll()
   end)
 end
 
