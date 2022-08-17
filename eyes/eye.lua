@@ -17,46 +17,46 @@ function eye.load(x, y, eyeRadius, pupilRadius)
 end
 
 local function loop(callback)
-  for _, instance in pairs(state) do
-    callback(instance)
+  for _, value in pairs(state) do
+    callback(value)
   end
 end
 
-local function update(instance)
+local function update(value)
   local cursor = {}
-  cursor.dx = love.mouse.getX() - instance.cornea.x
-  cursor.dy = love.mouse.getY() - instance.cornea.y
+  cursor.dx = love.mouse.getX() - value.cornea.x
+  cursor.dy = love.mouse.getY() - value.cornea.y
   cursor.distance = math.sqrt(cursor.dx ^ 2 + cursor.dy ^ 2)
 
-  local radiusDifference = instance.cornea.radius - instance.pupil.radius
+  local radiusDifference = value.cornea.radius - value.pupil.radius
   if cursor.distance > radiusDifference then
-    instance.pupil.x = instance.cornea.x + (cursor.dx * radiusDifference) / cursor.distance
-    instance.pupil.y = instance.cornea.y + (cursor.dy * radiusDifference) / cursor.distance
+    value.pupil.x = value.cornea.x + (cursor.dx * radiusDifference) / cursor.distance
+    value.pupil.y = value.cornea.y + (cursor.dy * radiusDifference) / cursor.distance
   else
-    instance.pupil.x = instance.cornea.x + cursor.dx
-    instance.pupil.y = instance.cornea.y + cursor.dy
+    value.pupil.x = value.cornea.x + cursor.dx
+    value.pupil.y = value.cornea.y + cursor.dy
   end
 end
 
 function eye.updateAll()
-  loop(function(instance)
-    update(instance)
+  loop(function(value)
+    update(value)
   end)
 end
 
-local function draw(instance)
+local function draw(value)
   love.graphics.setColor(love.math.colorFromBytes(248, 248, 242))
-  love.graphics.circle('fill', instance.cornea.x, instance.cornea.y, instance.cornea.radius)
+  love.graphics.circle('fill', value.cornea.x, value.cornea.y, value.cornea.radius)
 
   love.graphics.setColor(love.math.colorFromBytes(68, 71, 90))
-  love.graphics.circle('fill', instance.pupil.x, instance.pupil.y, instance.pupil.radius)
+  love.graphics.circle('fill', value.pupil.x, value.pupil.y, value.pupil.radius)
 
   love.graphics.setColor(1, 1, 1)
 end
 
 function eye.drawAll()
-  loop(function(instance)
-    draw(instance)
+  loop(function(value)
+    draw(value)
   end)
 end
 

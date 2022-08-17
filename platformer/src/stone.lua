@@ -38,34 +38,23 @@ function stone.loadAll()
 end
 
 local function loop(callback)
-  for _, instance in pairs(state) do
-    callback(instance)
+  for _, value in pairs(state) do
+    callback(value)
   end
 end
 
-local function draw(instance)
+local function draw(value)
   love.graphics.push()
   love.graphics.translate(
-    instance.physics.body:getX(),
-    instance.physics.body:getY()
+    value.physics.body:getX(),
+    value.physics.body:getY()
   )
-  love.graphics.rotate(instance.physics.body:getAngle())
+  love.graphics.rotate(value.physics.body:getAngle())
   love.graphics.setColor(love.math.colorFromBytes(98, 114, 164))
-  if instance.polygon == 'rectangle' then
-    love.graphics.rectangle(
-      'line',
-      -instance.width / 2,
-      -instance.height / 2,
-      instance.width,
-      instance.height
-    )
-  elseif instance.polygon == 'ellipse' then
-    love.graphics.circle(
-      'line',
-      0,
-      0,
-      instance.width / 2
-    )
+  if value.polygon == 'rectangle' then
+    love.graphics.rectangle('line', -value.width / 2, -value.height / 2, value.width, value.height)
+  elseif value.polygon == 'ellipse' then
+    love.graphics.circle('line', 0, 0, value.width / 2)
   end
   love.graphics.pop()
 
@@ -73,8 +62,8 @@ local function draw(instance)
 end
 
 function stone.drawAll()
-  loop(function(instance)
-    draw(instance)
+  loop(function(value)
+    draw(value)
   end)
 end
 

@@ -24,37 +24,37 @@ function button.load(text, callback)
 end
 
 local function loop(callback)
-  for _, instance in pairs(state) do
-    callback(instance)
+  for _, value in pairs(state) do
+    callback(value)
   end
 end
 
-local function update(instance, mouseX, mouseY)
-  local isMouseHovering = mouseX > instance.buttonX and mouseX < instance.buttonX + width and
-      mouseY > instance.buttonY and mouseY < instance.buttonY + height
-  instance.isHovered = isMouseHovering
-  if instance.isHovered then love.mouse.setCursor(cursor) end
+local function update(value, mouseX, mouseY)
+  local isMouseHovering = mouseX > value.buttonX and mouseX < value.buttonX + width and
+      mouseY > value.buttonY and mouseY < value.buttonY + height
+  value.isHovered = isMouseHovering
+  if value.isHovered then love.mouse.setCursor(cursor) end
 end
 
 function button.updateAll()
   local mouseX, mouseY = love.mouse.getPosition()
   love.mouse.setCursor()
 
-  loop(function(instance)
-    update(instance, mouseX, mouseY)
+  loop(function(value)
+    update(value, mouseX, mouseY)
   end)
 end
 
-local function draw(instance)
+local function draw(value)
   local buttonColor = { love.math.colorFromBytes(64, 71, 90) }
-  if instance.isHovered then
+  if value.isHovered then
     buttonColor = { love.math.colorFromBytes(98, 114, 164) }
   end
   love.graphics.setColor(buttonColor)
   love.graphics.rectangle(
     'fill',
-    instance.buttonX,
-    instance.buttonY,
+    value.buttonX,
+    value.buttonY,
     width,
     height,
     radius,
@@ -63,10 +63,10 @@ local function draw(instance)
 
   love.graphics.setColor(love.math.colorFromBytes(248, 248, 242))
   love.graphics.printf(
-    instance.text,
+    value.text,
     font,
-    instance.buttonX,
-    instance.buttonY + (height / 2) - math.ceil(font:getHeight() / 2),
+    value.buttonX,
+    value.buttonY + (height / 2) - math.ceil(font:getHeight() / 2),
     width,
     'center'
   )
@@ -75,14 +75,14 @@ local function draw(instance)
 end
 
 function button.drawAll()
-  loop(function(instance)
-    draw(instance)
+  loop(function(value)
+    draw(value)
   end)
 end
 
 function button.handleClick()
-  loop(function(instance)
-    if instance.isHovered then instance.callback() end
+  loop(function(value)
+    if value.isHovered then value.callback() end
   end)
 end
 

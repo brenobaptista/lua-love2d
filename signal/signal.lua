@@ -16,17 +16,17 @@ signal.disconnect = function(index)
 end
 
 signal.disconnectGroup = function(group)
-  for index, instance in pairs(state) do
-    if instance.group == group then
+  for index, value in pairs(state) do
+    if value.group == group then
       state[index] = nil
     end
   end
 end
 
 signal.send = function(name, ...)
-  for _, instance in pairs(state) do
-    if instance.name == name or instance.name == '' then
-      instance.callback(...)
+  for _, value in pairs(state) do
+    if value.name == name or value.name == '' then
+      value.callback(...)
     end
   end
 end
