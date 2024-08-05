@@ -10,7 +10,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 8,
-  nextobjectid = 145,
+  nextobjectid = 147,
   properties = {},
   tilesets = {
     {
@@ -144,7 +144,7 @@ return {
       id = 4,
       name = "Collision",
       class = "",
-      visible = false,
+      visible = true,
       opacity = 1,
       offsetx = 0,
       offsety = 0,
@@ -213,7 +213,7 @@ return {
           x = 624,
           y = 16,
           width = 16,
-          height = 304,
+          height = 320,
           rotation = 0,
           visible = true,
           properties = {}
@@ -223,9 +223,9 @@ return {
           name = "",
           type = "",
           shape = "rectangle",
-          x = 0,
+          x = 80,
           y = 320,
-          width = 640,
+          width = 480,
           height = 48,
           rotation = 0,
           visible = true,
@@ -239,9 +239,45 @@ return {
           x = 0,
           y = 0,
           width = 16,
-          height = 320,
+          height = 336,
           rotation = 0,
           visible = true,
+          properties = {}
+        },
+        {
+          id = 145,
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 640,
+          y = 336,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          polygon = {
+            { x = 0, y = 0 },
+            { x = -16, y = 0 },
+            { x = 0, y = 16 }
+          },
+          properties = {}
+        },
+        {
+          id = 146,
+          name = "",
+          type = "",
+          shape = "polygon",
+          x = 0,
+          y = 336,
+          width = 0,
+          height = 0,
+          rotation = 270,
+          visible = true,
+          polygon = {
+            { x = 0, y = 0 },
+            { x = -16, y = 0 },
+            { x = 0, y = 16 }
+          },
           properties = {}
         }
       }

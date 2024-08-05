@@ -37,6 +37,7 @@ function love.update(dt)
   World:update(dt)
   player:update(dt)
   countdown:update(dt, balls.spawn)
+  balls.update()
 end
 
 function love.draw()

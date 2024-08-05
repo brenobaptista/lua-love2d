@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="80" height="45" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="145">
+<map version="1.10" tiledversion="1.11.0" orientation="orthogonal" renderorder="right-down" width="80" height="45" tilewidth="16" tileheight="16" infinite="0" nextlayerid="8" nextobjectid="147">
  <editorsettings>
   <export target="map.lua" format="lua"/>
  </editorsettings>
@@ -58,7 +58,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="4" name="Collision" visible="0">
+ <objectgroup id="4" name="Collision">
   <properties>
    <property name="collidable" type="bool" value="true"/>
   </properties>
@@ -69,9 +69,15 @@
   <object id="52" x="624" y="16">
    <polygon points="0,0 -16,0 0,16"/>
   </object>
-  <object id="61" x="624" y="16" width="16" height="304"/>
-  <object id="63" x="0" y="320" width="640" height="48"/>
-  <object id="142" x="0" y="0" width="16" height="320"/>
+  <object id="61" x="624" y="16" width="16" height="320"/>
+  <object id="63" x="80" y="320" width="480" height="48"/>
+  <object id="142" x="0" y="0" width="16" height="336"/>
+  <object id="145" x="640" y="336">
+   <polygon points="0,0 -16,0 0,16"/>
+  </object>
+  <object id="146" x="0" y="336" rotation="270">
+   <polygon points="0,0 -16,0 0,16"/>
+  </object>
  </objectgroup>
  <objectgroup id="6" name="Player">
   <object id="27" x="304" y="16" width="16" height="16">

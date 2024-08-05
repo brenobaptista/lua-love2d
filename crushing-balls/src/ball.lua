@@ -15,6 +15,20 @@ function ball.new(initialX, initialY, velocityX, radius)
   return self
 end
 
+function ball:checkBoundariesAndRemove(removeFromTable, index)
+  local x, y = self.physics.body:getPosition()
+
+  if
+      x < -self.radius
+      or x > love.graphics.getWidth() / 2 + self.radius
+      or y < -self.radius
+      or y > love.graphics.getHeight() / 2 + self.radius
+  then
+    self.physics.body:destroy()
+    removeFromTable(index)
+  end
+end
+
 function ball:draw()
   love.graphics.setColor(love.math.colorFromBytes(255, 85, 85))
   love.graphics.circle('fill', self.physics.body:getX(), self.physics.body:getY(), self.radius)

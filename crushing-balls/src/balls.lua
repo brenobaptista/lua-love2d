@@ -3,12 +3,6 @@ local ball = require('src/ball')
 local balls = {}
 local state = {}
 
-local function loop(callback)
-  for _, value in pairs(state) do
-    callback(value)
-  end
-end
-
 function balls.load()
   math.randomseed(os.time())
 end
@@ -31,10 +25,20 @@ function balls.spawn()
   table.insert(state, ball.new(initialX, initialY, velocityX, radius))
 end
 
+local function removeFromTable(index)
+  table.remove(state, index)
+end
+
+function balls.update()
+  for index, value in ipairs(state) do
+    value:checkBoundariesAndRemove(removeFromTable, index)
+  end
+end
+
 function balls.draw()
-  loop(function(value)
+  for _, value in ipairs(state) do
     value:draw()
-  end)
+  end
 end
 
 return balls
