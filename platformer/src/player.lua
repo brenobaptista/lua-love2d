@@ -1,3 +1,4 @@
+local camera = require('src/camera')
 local dust = require('src/dust')
 
 local player = {}
@@ -73,13 +74,20 @@ function player:draw()
 
   if DebugMode then
     love.graphics.setColor(love.math.colorFromBytes(80, 250, 123))
-    love.graphics.print(tostring(self.grounded), 16)
     love.graphics.rectangle(
       'line',
       x - self.width / 2 + 1,
       y - 1 + self.height / 2,
       self.width - 2,
       2
+    )
+
+    love.graphics.scale(1 / camera.scale, 1 / camera.scale)
+    love.graphics.setNewFont(20)
+    love.graphics.print(
+      tostring(self.grounded),
+      16 + camera.translateX * camera.scale,
+      8 + camera.translateY * camera.scale
     )
   end
 
