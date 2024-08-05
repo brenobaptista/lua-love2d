@@ -44,11 +44,10 @@ local function loop(callback)
 end
 
 local function draw(value)
+  local x, y = value.physics.body:getPosition()
+
   love.graphics.push()
-  love.graphics.translate(
-    value.physics.body:getX(),
-    value.physics.body:getY()
-  )
+  love.graphics.translate(x, y)
   love.graphics.rotate(value.physics.body:getAngle())
   love.graphics.setColor(love.math.colorFromBytes(98, 114, 164))
   if value.polygon == 'rectangle' then

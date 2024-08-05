@@ -30,8 +30,10 @@ function ball:checkBoundariesAndRemove(removeFromTable, index)
 end
 
 function ball:draw()
+  local x, y = self.physics.body:getPosition()
+
   love.graphics.setColor(love.math.colorFromBytes(255, 85, 85))
-  love.graphics.circle('fill', self.physics.body:getX(), self.physics.body:getY(), self.radius)
+  love.graphics.circle('fill', x, y, self.radius)
   love.graphics.setColor(1, 1, 1)
 end
 

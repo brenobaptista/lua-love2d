@@ -26,7 +26,7 @@ function player:load()
   self.physics.sensorFixture = love.physics.newFixture(self.physics.body, self.physics.sensorShape, 0)
   self.physics.sensorFixture:setSensor(true)
 
-  self.xVelEmitDust = 20
+  self.velocityXEmitDust = 20
   dust.load()
 end
 
@@ -47,9 +47,11 @@ local function decreaseGraceTimer(self, dt)
 end
 
 local function emitDust(self)
-  local xVel, _ = self.physics.body:getLinearVelocity()
-  if self.grounded and math.abs(xVel) > self.xVelEmitDust then
-    dust.setPosition(self.physics.body:getX(), self.physics.body:getY() + self.radius)
+  local x, y = self.physics.body:getPosition()
+  local velocityX, _ = self.physics.body:getLinearVelocity()
+
+  if self.grounded and math.abs(velocityX) > self.velocityXEmitDust then
+    dust.setPosition(x, y + self.radius)
     dust.emit()
   end
 end
@@ -63,21 +65,18 @@ function player:update(dt)
 end
 
 function player:draw()
+  local x, y = self.physics.body:getPosition()
+
   love.graphics.setColor(love.math.colorFromBytes(189, 147, 249))
-  love.graphics.circle(
-    'line',
-    self.physics.body:getX(),
-    self.physics.body:getY(),
-    self.radius
-  )
+  love.graphics.circle('line', x, y, self.radius)
 
   if DebugMode then
     love.graphics.setColor(love.math.colorFromBytes(80, 250, 123))
     love.graphics.print(tostring(self.grounded), 16)
     love.graphics.rectangle(
       'line',
-      self.physics.body:getX() - self.width / 2 + 1,
-      self.physics.body:getY() - 1 + self.height / 2,
+      x - self.width / 2 + 1,
+      y - 1 + self.height / 2,
       self.width - 2,
       2
     )
