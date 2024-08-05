@@ -16,7 +16,7 @@ end
 function balls.spawn()
   local side = math.random(2)
   local initialX
-  local initialY = Map.height * Map.tileheight / 4
+  local initialY = love.graphics.getHeight() / 4
   local velocityX = 160
   local radius = 24
   local offsetX = radius + Map.tilewidth
@@ -24,7 +24,7 @@ function balls.spawn()
   if side == 1 then
     initialX = offsetX
   else
-    initialX = Map.width * Map.tilewidth / 2 - offsetX
+    initialX = love.graphics.getWidth() / 2 - offsetX
     velocityX = -velocityX
   end
 
