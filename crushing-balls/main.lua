@@ -24,7 +24,7 @@ function love.load()
   World:setCallbacks(beginContact, endContact)
   Map:box2d_init(World)
   balls.load()
-  countdown:load()
+  countdown:load(1)
   player:load()
 
   if not DebugMode then

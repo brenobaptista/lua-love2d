@@ -1,7 +1,7 @@
 local countdown = {}
 
-function countdown:load()
-  self.interval = 1
+function countdown:load(interval)
+  self.interval = interval
   self.timer = self.interval
 end
 
