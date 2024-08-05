@@ -67,19 +67,6 @@ function player:draw()
   love.graphics.push("all")
   love.graphics.setColor(love.math.colorFromBytes(189, 147, 249))
   love.graphics.circle('line', x, y, self.radius)
-
-  if DebugMode then
-    love.graphics.setColor(love.math.colorFromBytes(80, 250, 123))
-    love.graphics.print(tostring(self.grounded), 16)
-    love.graphics.rectangle(
-      'line',
-      x - self.width / 2 + 1,
-      y - 1 + self.height / 2,
-      self.width - 2,
-      2
-    )
-  end
-
   love.graphics.pop()
 end
 

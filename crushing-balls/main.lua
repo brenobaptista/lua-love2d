@@ -1,6 +1,3 @@
-DebugMode = false
-if arg[#arg] == '-debug' then DebugMode = true end
-
 local sti = require('libs/sti')
 local balls = require('src/balls')
 local camera = require('src/camera')
@@ -23,14 +20,12 @@ end
 function love.load()
   World:setCallbacks(beginContact, endContact)
   Map:box2d_init(World)
+  Map.layers['Collision'].visible = false
+  Map.layers['Player'].visible = false
+
   balls.load()
   countdown:load(1)
   player:load()
-
-  if not DebugMode then
-    Map.layers['Collision'].visible = false
-    Map.layers['Player'].visible = false
-  end
 end
 
 function love.update(dt)
