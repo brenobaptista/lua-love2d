@@ -1,13 +1,13 @@
 local ball = {}
 ball.__index = ball
 
-function ball.new(initialX, initialY, velocityX, radius)
+function ball.new(initialX, initialY, velocityX, velocityY, radius)
   local self = setmetatable({}, ball)
 
   self.radius = radius
   self.physics = {}
   self.physics.body = love.physics.newBody(World, initialX, initialY, 'dynamic')
-  self.physics.body:setLinearVelocity(velocityX, 0)
+  self.physics.body:setLinearVelocity(velocityX, velocityY)
   self.physics.shape = love.physics.newCircleShape(self.radius)
   self.physics.fixture = love.physics.newFixture(self.physics.body, self.physics.shape)
   self.physics.fixture:setRestitution(0.8)

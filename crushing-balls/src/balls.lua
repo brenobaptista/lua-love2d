@@ -9,20 +9,19 @@ end
 
 function balls.spawn()
   local side = math.random(2)
-  local initialX
-  local initialY = love.graphics.getHeight() / 4
-  local velocityX = 160
   local radius = 24
   local offsetX = radius + Map.tilewidth
+  local initialX = offsetX
+  local initialY = love.graphics.getHeight() / 4
+  local velocityX = 160 + math.random(0, 160)
+  local velocityY = math.random(-320, 320)
 
-  if side == 1 then
-    initialX = offsetX
-  else
+  if side == 2 then
     initialX = love.graphics.getWidth() / 2 - offsetX
     velocityX = -velocityX
   end
 
-  table.insert(state, ball.new(initialX, initialY, velocityX, radius))
+  table.insert(state, ball.new(initialX, initialY, velocityX, velocityY, radius))
 end
 
 local function removeFromTable(index)
