@@ -33,7 +33,7 @@ function ball:draw()
   local x, y = self.physics.body:getPosition()
 
   love.graphics.setColor(love.math.colorFromBytes(255, 85, 85))
-  love.graphics.circle('fill', x, y, self.radius)
+  love.graphics.circle('line', x, y, self.radius)
   love.graphics.setColor(1, 1, 1)
 end
 
