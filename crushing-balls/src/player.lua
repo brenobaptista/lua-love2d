@@ -42,9 +42,23 @@ local function decreaseGraceTimer(self, dt)
   end
 end
 
+local function checkBoundariesAndGameOver(self)
+  local x, y = player.physics.body:getPosition()
+
+  if
+      x < -self.radius
+      or x > love.graphics.getWidth() / 2 + self.radius
+      or y < -self.radius
+      or y > love.graphics.getHeight() / 2 + self.radius
+  then
+    love.event.quit()
+  end
+end
+
 function player:update(dt)
   move(self)
   decreaseGraceTimer(self, dt)
+  checkBoundariesAndGameOver(self)
 end
 
 function player:draw()
