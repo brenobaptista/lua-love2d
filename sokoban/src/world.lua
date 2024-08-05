@@ -70,6 +70,8 @@ end
 function world:draw()
   love.graphics.setBackgroundColor(self.colors[self.symbols.floor])
 
+  love.graphics.push("all")
+
   for y, row in pairs(self.visualGrid) do
     for x, cell in pairs(row) do
       local padding = self.tileSize / 8
@@ -112,7 +114,7 @@ function world:draw()
     end
   end
 
-  love.graphics.setColor(1, 1, 1)
+  love.graphics.pop()
 end
 
 local function getTile(x, y)

@@ -45,13 +45,13 @@ function eye.updateAll()
 end
 
 local function draw(value)
+  love.graphics.push("all")
   love.graphics.setColor(love.math.colorFromBytes(248, 248, 242))
   love.graphics.circle('fill', value.cornea.x, value.cornea.y, value.cornea.radius)
 
   love.graphics.setColor(love.math.colorFromBytes(68, 71, 90))
   love.graphics.circle('fill', value.pupil.x, value.pupil.y, value.pupil.radius)
-
-  love.graphics.setColor(1, 1, 1)
+  love.graphics.pop()
 end
 
 function eye.drawAll()

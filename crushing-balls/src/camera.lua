@@ -3,7 +3,7 @@ local camera = {
 }
 
 function camera:draw(callback)
-  love.graphics.push()
+  love.graphics.push("transform")
   love.graphics.scale(self.scale, self.scale)
   callback()
   love.graphics.pop()

@@ -28,6 +28,8 @@ end
 function player:draw()
   local padding = World.tileSize / 4
   local radius = World.tileSize / 16
+
+  love.graphics.push("all")
   love.graphics.setColor(self.color)
   love.graphics.rectangle(
     'fill',
@@ -38,7 +40,7 @@ function player:draw()
     radius,
     radius
   )
-  love.graphics.setColor(1, 1, 1)
+  love.graphics.pop()
 end
 
 Signal.connect('arrowKeyPressed', function(dx, dy)

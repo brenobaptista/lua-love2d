@@ -67,6 +67,7 @@ end
 function player:draw()
   local x, y = self.physics.body:getPosition()
 
+  love.graphics.push("all")
   love.graphics.setColor(love.math.colorFromBytes(189, 147, 249))
   love.graphics.circle('line', x, y, self.radius)
 
@@ -82,7 +83,8 @@ function player:draw()
     )
   end
 
-  love.graphics.setColor(1, 1, 1)
+  love.graphics.pop()
+
   dust.draw()
 end
 

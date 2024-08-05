@@ -50,6 +50,8 @@ local function draw(value)
   if value.isHovered then
     buttonColor = { love.math.colorFromBytes(98, 114, 164) }
   end
+
+  love.graphics.push("all")
   love.graphics.setColor(buttonColor)
   love.graphics.rectangle(
     'fill',
@@ -70,8 +72,7 @@ local function draw(value)
     width,
     'center'
   )
-
-  love.graphics.setColor(1, 1, 1)
+  love.graphics.pop()
 end
 
 function button.drawAll()

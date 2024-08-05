@@ -46,7 +46,7 @@ end
 local function draw(value)
   local x, y = value.physics.body:getPosition()
 
-  love.graphics.push()
+  love.graphics.push("all")
   love.graphics.translate(x, y)
   love.graphics.rotate(value.physics.body:getAngle())
   love.graphics.setColor(love.math.colorFromBytes(98, 114, 164))
@@ -56,8 +56,6 @@ local function draw(value)
     love.graphics.circle('line', 0, 0, value.width / 2)
   end
   love.graphics.pop()
-
-  love.graphics.setColor(1, 1, 1)
 end
 
 function stone.drawAll()
