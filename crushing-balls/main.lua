@@ -1,9 +1,10 @@
 local sti = require('libs/sti')
 local balls = require('src/balls')
 local camera = require('src/camera')
+local countdown = require('src/countdown')
 local pause = require('src/pause')
 local player = require('src/player')
-local countdown = require('src/countdown')
+local timer = require('src/timer')
 
 local realGravity, pixelsPerMeter, multiplier = 9.81, 16, 3
 love.physics.setMeter(pixelsPerMeter)
@@ -35,6 +36,7 @@ function love.update(dt)
   World:update(dt)
   player:update(dt)
   countdown:update(dt, balls.spawn)
+  timer:update(dt)
   balls.update()
 end
 
@@ -42,6 +44,7 @@ function love.draw()
   love.graphics.setBackgroundColor(love.math.colorFromBytes(40, 42, 54))
 
   Map:draw(0, 0, camera.scale, camera.scale)
+  timer:draw()
   camera:draw(function()
     player:draw()
     balls.draw()
