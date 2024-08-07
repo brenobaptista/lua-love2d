@@ -8,7 +8,7 @@ end
 
 function timer:draw()
   local formattedTime = string.format("%.1f", self.elapsedTime)
-  local font = love.graphics.newFont(40)
+  local font = love.graphics.newFont(48)
   local offsetFontHeight = math.ceil(font:getHeight() / 2)
 
   love.graphics.push("all")

@@ -9,7 +9,7 @@ end
 
 function pause:draw()
   if self.isPaused then
-    local font = love.graphics.newFont(24)
+    local font = love.graphics.newFont(48)
     local offsetFontHeight = math.ceil(font:getHeight() / 2)
 
     love.graphics.push("all")
