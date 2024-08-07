@@ -26,7 +26,7 @@ function love.load()
   Map.layers['Player'].visible = false
 
   balls.load()
-  countdown:load(1)
+  countdown:load(0.5)
   player:load()
 end
 
