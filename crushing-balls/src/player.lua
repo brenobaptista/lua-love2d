@@ -1,3 +1,5 @@
+local pause = require('src/pause')
+
 local player = {}
 
 function player:load()
@@ -51,7 +53,8 @@ local function checkBoundariesAndGameOver(self)
       or y < -self.radius
       or y > love.graphics.getHeight() / 2 + self.radius
   then
-    love.event.quit()
+    pause.text = "Game Over"
+    pause.isPaused = true
   end
 end
 
