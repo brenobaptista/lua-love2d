@@ -42,11 +42,11 @@ function love.draw()
   love.graphics.setBackgroundColor(love.math.colorFromBytes(40, 42, 54))
 
   Map:draw(0, 0, camera.scale, camera.scale)
-  pause:draw()
   camera:draw(function()
     player:draw()
     balls.draw()
   end)
+  pause:draw()
 end
 
 function love.keypressed(key)
