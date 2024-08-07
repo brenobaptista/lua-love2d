@@ -9,14 +9,23 @@ end
 
 function pause:draw()
   if self.isPaused then
+    local font = love.graphics.newFont(24)
+    local offsetFontHeight = math.ceil(font:getHeight() / 2)
+
     love.graphics.push("all")
 
     love.graphics.setColor(0, 0, 0, 0.3)
     love.graphics.rectangle("fill", 0, 0, love.graphics.getWidth(), love.graphics.getHeight())
 
     love.graphics.setColor(love.math.colorFromBytes(248, 248, 242))
-    love.graphics.setNewFont(24)
-    love.graphics.printf(self.text, 0, love.graphics.getHeight() / 2, love.graphics.getWidth(), "center")
+    love.graphics.printf(
+      self.text,
+      font,
+      0,
+      love.graphics.getHeight() / 2 - offsetFontHeight,
+      love.graphics.getWidth(),
+      "center"
+    )
 
     love.graphics.pop()
   end

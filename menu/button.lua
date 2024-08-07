@@ -6,6 +6,7 @@ local margin = 16
 local height = 64
 local width = 256
 local font = love.graphics.newFont('fonts/Inter/Inter-Thin.ttf', 32)
+local offsetFontHeight = math.ceil(font:getHeight() / 2)
 local cursor = love.mouse.getSystemCursor('hand')
 
 function button.load(text, callback)
@@ -68,7 +69,7 @@ local function draw(value)
     value.text,
     font,
     value.buttonX,
-    value.buttonY + (height / 2) - math.ceil(font:getHeight() / 2),
+    value.buttonY + (height / 2) - offsetFontHeight,
     width,
     'center'
   )
