@@ -53,6 +53,7 @@ local function checkBoundariesAndGameOver(self)
       or y < -self.radius
       or y > love.graphics.getHeight() / 2 + self.radius
   then
+    pause.canToggle = false
     pause.text = "Game Over"
     pause.isPaused = true
   end

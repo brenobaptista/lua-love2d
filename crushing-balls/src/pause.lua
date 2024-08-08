@@ -1,10 +1,13 @@
 local pause = {
   isPaused = false,
-  text = "Paused"
+  text = "Paused",
+  canToggle = true
 }
 
 function pause:toggle()
-  self.isPaused = not self.isPaused
+  if self.canToggle then
+    self.isPaused = not self.isPaused
+  end
 end
 
 function pause:draw()
