@@ -2,7 +2,7 @@ local sti = require('libs/sti')
 local balls = require('src/balls')
 local camera = require('src/camera')
 local countdown = require('src/countdown')
-local pause = require('src/pause')
+local menu = require('src/menu')
 local player = require('src/player')
 local timer = require('src/timer')
 
@@ -31,7 +31,7 @@ function love.load()
 end
 
 function love.update(dt)
-  if pause.isPaused then return end
+  if menu.isPaused then return end
 
   World:update(dt)
   player:update(dt)
@@ -49,12 +49,12 @@ function love.draw()
     player:draw()
     balls.draw()
   end)
-  pause:draw()
+  menu:draw()
 end
 
 function love.keypressed(key)
   if key == 'escape' then
-    pause:toggle()
+    menu:togglePause()
   end
 
   if (key == 'w' or key == 'up' or key == 'space') then

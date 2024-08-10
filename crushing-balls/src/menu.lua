@@ -1,16 +1,16 @@
-local pause = {
+local menu = {
   isPaused = false,
   text = "Paused",
-  canToggle = true
+  canTogglePause = true
 }
 
-function pause:toggle()
-  if self.canToggle then
+function menu:togglePause()
+  if self.canTogglePause then
     self.isPaused = not self.isPaused
   end
 end
 
-function pause:draw()
+function menu:draw()
   if self.isPaused then
     local font = love.graphics.newFont(48)
     local offsetFontHeight = math.ceil(font:getHeight() / 2)
@@ -34,4 +34,4 @@ function pause:draw()
   end
 end
 
-return pause
+return menu

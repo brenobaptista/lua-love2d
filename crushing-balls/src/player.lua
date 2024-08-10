@@ -1,4 +1,4 @@
-local pause = require('src/pause')
+local menu = require('src/menu')
 
 local player = {}
 
@@ -53,9 +53,9 @@ local function checkBoundariesAndGameOver(self)
       or y < -self.radius
       or y > love.graphics.getHeight() / 2 + self.radius
   then
-    pause.canToggle = false
-    pause.text = "Game Over"
-    pause.isPaused = true
+    menu.canTogglePause = false
+    menu.text = "Game Over"
+    menu.isPaused = true
   end
 end
 
