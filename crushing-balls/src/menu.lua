@@ -1,3 +1,5 @@
+local button = require('src/button')
+
 local menu = {
   isPaused = false,
   text = "Paused",
@@ -7,6 +9,16 @@ local menu = {
 function menu:togglePause()
   if self.canTogglePause then
     self.isPaused = not self.isPaused
+  end
+end
+
+function menu.load()
+  button.load('Quit', function() love.event.quit() end)
+end
+
+function menu:update()
+  if self.isPaused then
+    button.updateAll()
   end
 end
 
@@ -31,6 +43,8 @@ function menu:draw()
     )
 
     love.graphics.pop()
+
+    button.drawAll()
   end
 end
 

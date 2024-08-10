@@ -28,9 +28,11 @@ function love.load()
   balls.load()
   countdown:load(0.5)
   player:load()
+  menu.load()
 end
 
 function love.update(dt)
+  menu:update()
   if menu.isPaused then return end
 
   World:update(dt)
